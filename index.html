@@ -26,6 +26,7 @@
     --c-history:#5a4877;    --c-history-tint:#e8e2ef;
     --c-daytrip:#28587f;    --c-daytrip-tint:#dde7ee;
     --c-info:#4a5f60;       --c-info-tint:#e2eaea;
+    --c-checklist:#a1403c;  --c-checklist-tint:#f2dcda;
 
     --radius-s:10px;
     --radius-m:16px;
@@ -56,6 +57,7 @@
       --c-history:#b3a0d6;    --c-history-tint:#2a2438;
       --c-daytrip:#7fb0da;    --c-daytrip-tint:#1c2c3a;
       --c-info:#9ec2c1;       --c-info-tint:#213534;
+      --c-checklist:#e08c86;  --c-checklist-tint:#3a2220;
     }
   }
   :root[data-theme="dark"]{
@@ -81,6 +83,7 @@
     --c-history:#b3a0d6;    --c-history-tint:#2a2438;
     --c-daytrip:#7fb0da;    --c-daytrip-tint:#1c2c3a;
     --c-info:#9ec2c1;       --c-info-tint:#213534;
+    --c-checklist:#e08c86;  --c-checklist-tint:#3a2220;
   }
 
   *{box-sizing:border-box;}
@@ -262,6 +265,35 @@
   .kv .item b{display:block;font-size:13px;color:var(--ink-faint);font-weight:500;margin-bottom:3px;}
   .kv .item span{font-size:14.5px;color:var(--ink);}
 
+  /* checklist */
+  .checklist-progress{font-size:12.5px;color:var(--cc);font-weight:600;margin-top:2px;}
+  .checklist-list{display:flex;flex-direction:column;gap:2px;margin-top:10px;}
+  .checklist-row{
+    display:flex;align-items:flex-start;gap:10px;
+    padding:8px 8px;border-radius:10px;cursor:pointer;
+  }
+  .checklist-row:hover{background:var(--surface-2);}
+  .checklist-row input{
+    appearance:none;-webkit-appearance:none;
+    width:18px;height:18px;flex:none;margin-top:2px;
+    border:1.5px solid var(--border);border-radius:6px;
+    display:inline-flex;align-items:center;justify-content:center;
+    cursor:pointer;background:var(--surface);
+  }
+  .checklist-row input:checked{background:var(--cc);border-color:var(--cc);}
+  .checklist-row input:checked::after{
+    content:"";width:5px;height:9px;
+    border:solid #fff;border-width:0 2px 2px 0;
+    transform:rotate(45deg) translate(-1px,-1px);
+  }
+  .checklist-row span{font-size:14px;line-height:1.6;color:var(--ink);}
+  .checklist-row.checked span{color:var(--ink-faint);text-decoration:line-through;}
+  .checklist-reset{
+    display:inline-block;margin-top:14px;font-size:12.5px;color:var(--ink-faint);
+    text-decoration:underline;cursor:pointer;background:none;border:none;font-family:'Heebo';padding:0;
+  }
+  .checklist-reset:hover{color:var(--cc);}
+
   .empty{
     text-align:center;padding:60px 20px;color:var(--ink-faint);font-size:14.5px;display:none;
   }
@@ -328,7 +360,8 @@ const ICONS = {
   daytrip: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13"/><rect x="2.5" y="13" width="19" height="6" rx="1.5"/><circle cx="7" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/></svg>',
   info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.5" r="0.9" fill="currentColor" stroke="none"/></svg>',
   pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.3"/></svg>',
-  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>'
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>',
+  checklist: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M9 3.5V2.8a1.3 1.3 0 0 1 1.3-1.3h3.4A1.3 1.3 0 0 1 15 2.8v.7"/><path d="M8.5 12l2 2 4-4"/><path d="M8.5 17h4.5"/></svg>'
 };
 
 // ---------- Category metadata ----------
@@ -339,6 +372,7 @@ const CATS = [
   {id:'hike',    label:'טבע וטיולים',      cc:'--c-hike'},
   {id:'history', label:'היסטוריה ותרבות',  cc:'--c-history'},
   {id:'daytrip', label:'טיולי יום',        cc:'--c-daytrip'},
+  {id:'checklist', label:'לפני/אחרי הגעה', cc:'--c-checklist'},
   {id:'info',    label:'מידע שימושי',      cc:'--c-info'},
 ];
 
@@ -405,6 +439,45 @@ const SECTIONS = [
       {name:'תעלת קורינתוס', en:'Corinth Canal', dist:'כ-32 ק״מ · 38 דק׳', desc:'התעלה המרשימה שחוצה את האיסתמוס בין הים האגאי לים היוני — נקודת עצירה קצרה וקסומה בדרך, אפשר גם לצפות בקפיצות באנג׳י.', map:'Corinth Canal Greece'},
       {name:'נאפליו', en:'Nafplio', dist:'כ-50–55 ק״מ · כ-50 דק׳', desc:'העיר העתיקה הרומנטית של הפלופונסוס: מצודת פאלאמידי, מבצר האי בורצי והרחובות הוונציאניים — יום שלם עם קפה וארוחת ערב.', map:'Nafplio Greece'},
       {name:'לוטרקי — עיר הספא', en:'Loutraki', dist:'כ-40–45 ק״מ · 45 דק׳', desc:'עיירת נופש עם טיילת ים, מעיינות מרפא וקזינו — אופציה לערב אחר או יום רגוע יותר.', map:'Loutraki Greece'},
+    ]
+  },
+];
+
+// checklists for a house that stands empty most of the time
+const CHECKLISTS = [
+  {
+    id:'leave', title:'לפני שעוזבים — סוגרים את הבית', icon:'checklist',
+    subtitle:'סדר מומלץ לפני שנועלים ונוסעים, כדי שהבית יחכה בשלום עד הביקור הבא',
+    items:[
+      'לסגור את ברז המים הראשי — מונע נזק מנזילה בזמן שאין אף אחד בבית',
+      'לכבות את הבוילר/דוד החשמל — לא משאירים אותו דלוק כשאין שימוש במים',
+      'לסגור את ברז בלון הגז (אם משתמשים בגז לבישול)',
+      'לרוקן את המקרר ממוצרים מתכלים; לשקול ניתוק ופתיחת הדלת קלות למניעת עובש וריח',
+      'לנתק שקעים ומכשירי חשמל שלא חייבים להישאר דלוקים (טוסטר, מיקרוגל, מטענים, מכונת קפה)',
+      'לכבות מזגנים ולוודא שהשלטים מונחים במקום קבוע',
+      'לסגור ולנעול את כל התריסים והחלונות',
+      'לוודא שכל הדלתות והשער החיצוני נעולים',
+      'להוציא את כל הזבל מהבית ומהחצר',
+      'לוודא שאין נר, כיריים או תנור דולקים',
+      'להשאיר מספר טלפון של שכן או איש קשר מקומי שיכול לבדוק את הבית במקרה חירום',
+      'לצלם בקצרה את מצב הבית — שימושי אם יידרש תיעוד לביטוח',
+    ]
+  },
+  {
+    id:'arrive', title:'עם ההגעה — פותחים את הבית', icon:'checklist',
+    subtitle:'לפני שמתמקמים, כדאי לעבור על הרשימה הזו כדי לתפוס בעיה מוקדם',
+    items:[
+      'לבדוק את מצב הבית מבחוץ לפני הכניסה — חלונות, גג, נזק נראה לעין',
+      'לפתוח את ברז המים הראשי לאט ולבדוק שאין נזילות לפני שממשיכים הלאה',
+      'לפתוח חלונות ותריסים לאוורר את הבית מריח עומד ולחות',
+      'להדליק את הבוילר רק אחרי שווידאתם שיש מים בצנרת',
+      'לבדוק שאין ריח גז לפני שפותחים את ברז הגז ומדליקים את הכיריים',
+      'להדליק את הלוח החשמלי הראשי ולוודא שאף מפסק לא קפץ',
+      'לבדוק סימני מזיקים או עובש, בעיקר במטבח ובארונות אחסון',
+      'לבדוק שהמקרר מתחיל לקרר כמו שצריך',
+      'לאתחל את הראוטר ולוודא שיש אינטרנט',
+      'לעדכן את השכן/איש הקשר המקומי שהגעתם, ולשאול אם קרה משהו בזמן שנעדרתם',
+      'לעשות קניות בסיסיות בדרך (בסופיקו או קורינתוס — ראו בקטגוריית קניות ושירותים)',
     ]
   },
 ];
@@ -493,11 +566,31 @@ function buildChips(){
 }
 
 function countAll(){
-  return SECTIONS.reduce((n,s)=>n+s.items.length,0);
+  const sectionsCount = SECTIONS.reduce((n,s)=>n+s.items.length,0);
+  const checklistCount = CHECKLISTS.reduce((n,c)=>n+c.items.length,0);
+  return sectionsCount + checklistCount + INFO_PANELS.length;
 }
 function countCat(id){
+  if(id === 'checklist'){
+    return CHECKLISTS.reduce((n,c)=>n+c.items.length,0);
+  }
+  if(id === 'info'){
+    return INFO_PANELS.length;
+  }
   const s = SECTIONS.find(s=>s.cat===id);
   return s ? s.items.length : 0;
+}
+
+// ---------- Checklist persistence (per-browser, local only) ----------
+function getChecked(key){
+  try{
+    return JSON.parse(localStorage.getItem(key) || '{}');
+  }catch(e){ return {}; }
+}
+function setChecked(key, state){
+  try{
+    localStorage.setItem(key, JSON.stringify(state));
+  }catch(e){ /* storage unavailable — checklist still works, just won't persist */ }
 }
 
 function buildSections(){
@@ -544,6 +637,8 @@ function buildSections(){
     sectionsEl.appendChild(section);
   });
 
+  buildChecklistSection();
+
   // info panels section
   const infoSection = document.createElement('div');
   infoSection.className = 'section';
@@ -573,6 +668,98 @@ function buildSections(){
   });
   infoSection.appendChild(infoGrid);
   sectionsEl.appendChild(infoSection);
+}
+
+function buildChecklistSection(){
+  const catMeta = CATS.find(c=>c.id==='checklist');
+  const section = document.createElement('div');
+  section.className = 'section';
+  section.dataset.cat = 'checklist';
+
+  const head = document.createElement('div');
+  head.className = 'section-head';
+  head.innerHTML =
+    '<div class="section-title-row">' +
+      '<span class="section-icon" style="--sc:var(' + catMeta.cc + ');--sc-tint:var(' + catMeta.cc + '-tint)">' + ICONS.checklist + '</span>' +
+      '<h2>לפני ואחרי שמגיעים</h2>' +
+    '</div>' +
+    '<span class="count">הבית לא מאויש תמיד — שתי רשימות קצרות לסגירה ולפתיחה</span>';
+  section.appendChild(head);
+
+  const grid = document.createElement('div');
+  grid.className = 'grid';
+  grid.style.gridTemplateColumns = 'repeat(auto-fill,minmax(320px,1fr))';
+
+  CHECKLISTS.forEach(list=>{
+    const storageKey = 'korfos-checklist-' + list.id;
+    const checked = getChecked(storageKey);
+
+    const card = document.createElement('div');
+    card.className = 'panel card';
+    card.dataset.cat = 'checklist';
+    card.dataset.text = (list.title + ' ' + list.subtitle + ' ' + list.items.join(' ')).toLowerCase();
+    card.style.setProperty('--cc', 'var(' + catMeta.cc + ')');
+    card.style.setProperty('--cc-tint', 'var(' + catMeta.cc + '-tint)');
+
+    const progress = document.createElement('div');
+    progress.className = 'checklist-progress';
+
+    function renderProgress(){
+      const done = list.items.filter((_,i)=>checked[i]).length;
+      progress.textContent = done + ' מתוך ' + list.items.length + ' סומנו';
+    }
+
+    card.innerHTML =
+      '<div class="card-top"><span class="card-icon">' + ICONS.checklist + '</span><div><h3>' + list.title + '</h3></div></div>' +
+      '<p>' + list.subtitle + '</p>';
+
+    card.appendChild(progress);
+
+    const ul = document.createElement('div');
+    ul.className = 'checklist-list';
+
+    list.items.forEach((text, i)=>{
+      const row = document.createElement('label');
+      row.className = 'checklist-row' + (checked[i] ? ' checked' : '');
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.checked = !!checked[i];
+      cb.addEventListener('change', ()=>{
+        checked[i] = cb.checked;
+        row.classList.toggle('checked', cb.checked);
+        setChecked(storageKey, checked);
+        renderProgress();
+      });
+      const span = document.createElement('span');
+      span.textContent = text;
+      row.appendChild(cb);
+      row.appendChild(span);
+      ul.appendChild(row);
+    });
+
+    card.appendChild(ul);
+    renderProgress();
+
+    const reset = document.createElement('button');
+    reset.type = 'button';
+    reset.className = 'checklist-reset';
+    reset.textContent = 'לאפס את הרשימה';
+    reset.addEventListener('click', ()=>{
+      for(const k in checked){ delete checked[k]; }
+      setChecked(storageKey, checked);
+      ul.querySelectorAll('.checklist-row').forEach(row=>{
+        row.classList.remove('checked');
+        row.querySelector('input').checked = false;
+      });
+      renderProgress();
+    });
+    card.appendChild(reset);
+
+    grid.appendChild(card);
+  });
+
+  section.appendChild(grid);
+  sectionsEl.appendChild(section);
 }
 
 function applyFilter(){
