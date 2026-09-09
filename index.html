@@ -1,882 +1,597 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מדריך הבית בקורפוס, פלופונס - Korfos Peloponnese Guide</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts (Heebo & Rubik) -->
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        korfos: {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            500: '#0d9488',
-                            600: '#0f766e',
-                            700: '#115e59',
-                            800: '#134e4a',
-                            gold: '#d97706',
-                            ocean: '#0284c7',
-                            olive: '#65a30d'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Heebo', 'Rubik', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            font-family: 'Heebo', sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
-        }
-        .glass-header {
-            background: rgba(255, 255, 255, 0.94);
-            backdrop-filter: blur(12px);
-        }
-        .card-hover {
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 28px -10px rgba(15, 118, 110, 0.18);
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #0f766e;
-            border-radius: 4px;
-        }
-        .tab-btn.active {
-            background-color: #0f766e;
-            color: white;
-            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.35);
-        }
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-    </style>
-</head>
-<body class="min-h-screen flex flex-col antialiased selection:bg-teal-100 selection:text-teal-900">
+<title>מדריך קורפוס</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;600;700&family=Heebo:wght@300;400;500;600;700&display=swap">
+<style>
+  :root{
+    --bg:#eef3f0;
+    --surface:#ffffff;
+    --surface-2:#e2ebe6;
+    --ink:#132726;
+    --ink-soft:#48605d;
+    --ink-faint:#7c928d;
+    --border:#d2ddd7;
+    --border-soft:#e2eae5;
+    --accent:#136866;
+    --accent-strong:#0b4a48;
+    --accent-tint:#dcece9;
+    --gold:#a97a1f;
+    --gold-tint:#f3e6cb;
+    --shadow:0 1px 2px rgba(15,40,38,.06), 0 8px 24px -12px rgba(15,40,38,.18);
 
-    <header class="sticky top-0 z-50 glass-header border-b border-slate-200/80 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-teal-700 to-emerald-500 text-white flex items-center justify-center font-bold text-xl shadow-md">
-                            <i class="fa-solid fa-house-chimney-window"></i>
-                        </div>
-                        <div>
-                            <h1 class="text-xl font-extrabold text-slate-900 tracking-tight">הבית בקורפוס, פלופונס 🇬🇷</h1>
-                            <p class="text-xs text-slate-500 font-medium">Korfos, Corinthia • חופים • קניות • עיירות • מסלולים • צ'קליסט בית</p>
-                        </div>
-                    </div>
-                    <!-- Quick Saved Badge Mobile -->
-                    <button onclick="filterFavorites()" class="md:hidden flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 text-amber-700 border border-amber-200 rounded-full text-xs font-semibold">
-                        <i class="fa-solid fa-star text-amber-500"></i>
-                        <span id="fav-count-mobile">0</span> מועדפים
-                    </button>
-                </div>
+    --c-beach:#136866;      --c-beach-tint:#dcece9;
+    --c-food:#8a4a20;       --c-food-tint:#f1e2d2;
+    --c-shop:#946a17;       --c-shop-tint:#f2e6c8;
+    --c-hike:#3f6b34;       --c-hike-tint:#e2ebda;
+    --c-history:#5a4877;    --c-history-tint:#e8e2ef;
+    --c-daytrip:#28587f;    --c-daytrip-tint:#dde7ee;
+    --c-info:#4a5f60;       --c-info-tint:#e2eaea;
 
-                <!-- Global Search & Actions -->
-                <div class="flex items-center gap-2">
-                    <div class="relative flex-1 md:w-72">
-                        <input type="text" id="searchInput" onkeyup="handleSearch()" placeholder="חיפוש מקום, חוף, סופר, עיירה או טיפ..." 
-                            class="w-full pr-9 pl-4 py-2 bg-slate-100 border border-slate-200 rounded-xl text-sm focus:outline-none focus:bg-white focus:ring-2 focus:ring-teal-500 transition-all">
-                        <i class="fa-solid fa-magnifying-glass absolute right-3 top-3 text-slate-400 text-sm"></i>
-                    </div>
-                    <button onclick="filterFavorites()" class="hidden md:flex items-center gap-1.5 px-3.5 py-2 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 rounded-xl text-xs font-bold transition-all">
-                        <i class="fa-solid fa-star text-amber-500"></i>
-                        <span>מועדפים</span>
-                        <span id="fav-count-desktop" class="bg-amber-200 text-amber-900 rounded-full px-1.5 py-0.5 text-[10px]">0</span>
-                    </button>
-                </div>
-            </div>
+    --radius-s:10px;
+    --radius-m:16px;
+    --radius-l:22px;
+  }
 
-            <nav class="flex items-center gap-1.5 mt-3 overflow-x-auto pb-1 no-scrollbar text-xs font-medium border-t border-slate-100 pt-2">
-                <button onclick="switchTab('all')" id="tab-all" class="tab-btn active px-4 py-2 rounded-xl whitespace-nowrap transition-all">
-                    <i class="fa-solid fa-border-all ml-1.5"></i>הכל (20)
-                </button>
-                <button onclick="switchTab('beaches')" id="tab-beaches" class="tab-btn px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 whitespace-nowrap transition-all">
-                    <i class="fa-solid fa-umbrella-beach ml-1.5 text-sky-500"></i>חופים מומלצים
-                </button>
-                <button onclick="switchTab('supermarkets')" id="tab-supermarkets" class="tab-btn px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 whitespace-nowrap transition-all">
-                    <i class="fa-solid fa-cart-shopping ml-1.5 text-emerald-500"></i>סופרמרקטים וקניות
-                </button>
-                <button onclick="switchTab('towns')" id="tab-towns" class="tab-btn px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 whitespace-nowrap transition-all">
-                    <i class="fa-solid fa-city ml-1.5 text-purple-500"></i>עיירות וסיורים
-                </button>
-                <button onclick="switchTab('hikes')" id="tab-hikes" class="tab-btn px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 whitespace-nowrap transition-all">
-                    <i class="fa-solid fa-person-hiking ml-1.5 text-amber-500"></i>מסלולי הליכה וטבע
-                </button>
-                <button onclick="switchTab('tips')" id="tab-tips" class="tab-btn px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 whitespace-nowrap transition-all">
-                    <i class="fa-solid fa-key ml-1.5 text-rose-500"></i>טיפים לתחזוקת הבית
-                </button>
-                <button onclick="switchTab('checklist')" id="tab-checklist" class="tab-btn px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 whitespace-nowrap transition-all">
-                    <i class="fa-solid fa-clipboard-check ml-1.5 text-teal-600"></i>צ'קליסט הגעה ועזיבה
-                </button>
-            </nav>
-        </div>
-    </header>
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1b1a;
+      --surface:#152624;
+      --surface-2:#1c322f;
+      --ink:#eaf2ef;
+      --ink-soft:#a9c1bc;
+      --ink-faint:#7d938e;
+      --border:#2b433f;
+      --border-soft:#213531;
+      --accent:#59bcb6;
+      --accent-strong:#8ad6d0;
+      --accent-tint:#1c3634;
+      --gold:#e0b15c;
+      --gold-tint:#332a17;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 28px -14px rgba(0,0,0,.55);
 
-    <section class="bg-gradient-to-r from-teal-900 via-korfos-700 to-slate-900 text-white py-8 px-4 sm:px-6 relative overflow-hidden">
-        <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl font-black pointer-events-none select-none">KORFOS</div>
-        <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div>
-                <span class="inline-block bg-teal-400/20 text-teal-200 border border-teal-400/30 text-xs font-semibold px-3 py-1 rounded-full mb-2">
-                    ⚓️ מפרץ קורפוס, מחוז קורינתיה, פלופונז (כ-1.5 שעות מאתונה)
-                </span>
-                <h2 class="text-2xl sm:text-3xl font-extrabold tracking-wide">ברוכים הבאים לבית שלכם בקורפוס! 🌊</h2>
-                <p class="mt-1 text-slate-200 text-sm max-w-2xl leading-relaxed">
-                    מרכז המידע המלא שלכם: כל החופים השווים במפרץ ובסביבה, איפה עושים קניות (החל מלחם טרי בכפר ועד סופרי ענק בקורינתוס), עיירות ציוריות, מסלולי הליכה וכל הטיפים והצ'קליסטים לפתיחת וסגירת הבית.
-                </p>
-            </div>
-            <!-- Quick Stats -->
-            <div class="grid grid-cols-3 gap-3 w-full md:w-auto bg-white/10 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 text-center shrink-0">
-                <div class="px-2">
-                    <div class="text-xl font-black text-sky-300">8</div>
-                    <div class="text-[11px] text-slate-200">חופים מובחרים</div>
-                </div>
-                <div class="px-2 border-r border-white/20">
-                    <div class="text-xl font-black text-emerald-300">4</div>
-                    <div class="text-[11px] text-slate-200">מרכזי קניות</div>
-                </div>
-                <div class="px-2 border-r border-white/20">
-                    <div class="text-xl font-black text-amber-300">5</div>
-                    <div class="text-[11px] text-slate-200">עיירות ומסלולים</div>
-                </div>
-            </div>
-        </div>
-    </section>
+      --c-beach:#5fc2bb;      --c-beach-tint:#173430;
+      --c-food:#dd9a5f;       --c-food-tint:#33261a;
+      --c-shop:#e0bc5e;       --c-shop-tint:#332c16;
+      --c-hike:#8fbf7c;       --c-hike-tint:#233420;
+      --c-history:#b3a0d6;    --c-history-tint:#2a2438;
+      --c-daytrip:#7fb0da;    --c-daytrip-tint:#1c2c3a;
+      --c-info:#9ec2c1;       --c-info-tint:#213534;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1b1a;
+    --surface:#152624;
+    --surface-2:#1c322f;
+    --ink:#eaf2ef;
+    --ink-soft:#a9c1bc;
+    --ink-faint:#7d938e;
+    --border:#2b433f;
+    --border-soft:#213531;
+    --accent:#59bcb6;
+    --accent-strong:#8ad6d0;
+    --accent-tint:#1c3634;
+    --gold:#e0b15c;
+    --gold-tint:#332a17;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 28px -14px rgba(0,0,0,.55);
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
-        
-        <!-- Info Banner for Korfos Location -->
-        <div id="quick-welcome-banner" class="bg-gradient-to-r from-amber-50 to-teal-50 border border-teal-200/80 rounded-2xl p-4 mb-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div class="flex items-start gap-3">
-                <div class="p-2.5 bg-teal-600 text-white rounded-xl mt-0.5 shadow-sm">
-                    <i class="fa-solid fa-map-location-dot text-xl"></i>
-                </div>
-                <div>
-                    <h3 class="font-bold text-slate-900 text-base">מיקום והגעה לבית בקורפוס (Korfos, Corinthia)</h3>
-                    <p class="text-xs text-slate-600 mt-0.5 leading-relaxed">
-                        קורפוס ממוקמת במפרץ טבעי שמור וצלול בים הסרוני. מרחקים עיקריים: <strong>סופיקו</strong> (15 דק'), <strong>תעלת קורינתוס</strong> (35 דק'), <strong>אפידאוורוס</strong> (30 דק'), <strong>אתונה/שדה תעופה</strong> (שעה וחצי דרך כביש A8 ו-EO Corinthos-Epidaurou).
-                    </p>
-                </div>
-            </div>
-            <a href="https://maps.google.com/?q=Korfos+Corinthia+Greece" target="_blank" rel="noopener noreferrer" 
-               class="whitespace-nowrap bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all shadow-sm shrink-0">
-                <i class="fa-solid fa-diamond-turn-right"></i>
-                <span>ניווט גוגל מפות לקורפוס</span>
-            </a>
-        </div>
+    --c-beach:#5fc2bb;      --c-beach-tint:#173430;
+    --c-food:#dd9a5f;       --c-food-tint:#33261a;
+    --c-shop:#e0bc5e;       --c-shop-tint:#332c16;
+    --c-hike:#8fbf7c;       --c-hike-tint:#233420;
+    --c-history:#b3a0d6;    --c-history-tint:#2a2438;
+    --c-daytrip:#7fb0da;    --c-daytrip-tint:#1c2c3a;
+    --c-info:#9ec2c1;       --c-info-tint:#213534;
+  }
 
-        <!-- Section Header -->
-        <div class="flex items-center justify-between mb-6">
-            <h3 id="section-title" class="text-xl font-extrabold text-slate-900 flex items-center gap-2">
-                <i class="fa-solid fa-layer-group text-teal-600"></i>
-                <span>כל המקומות והמדריכים לקורפוס</span>
-            </h3>
-            <span id="items-count" class="text-xs font-semibold px-3 py-1 bg-slate-200 text-slate-700 rounded-full">20 פריטים</span>
-        </div>
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Heebo',system-ui,-apple-system,'Segoe UI',sans-serif;
+    direction:rtl;
+    text-align:right;
+    -webkit-font-smoothing:antialiased;
+    font-variant-numeric:tabular-nums;
+  }
+  h1,h2,h3{
+    font-family:'Frank Ruhl Libre',Georgia,serif;
+    font-weight:600;
+    text-wrap:balance;
+    margin:0;
+  }
+  a{color:var(--accent);}
+  img{max-width:100%;display:block;}
+  ::selection{background:var(--gold-tint);}
 
-        <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Dynamic Cards Populated via JavaScript -->
-        </div>
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:44px 20px 28px;
+    background:
+      radial-gradient(120% 160% at 100% 0%, var(--accent-tint), transparent 60%),
+      var(--surface);
+    border-bottom:1px solid var(--border-soft);
+    overflow:hidden;
+  }
+  .hero-wave{
+    position:absolute; inset:auto 0 0 0; height:64px; opacity:.5; pointer-events:none;
+  }
+  .hero-inner{max-width:1080px;margin:0 auto;position:relative;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Heebo';font-size:13px;font-weight:600;letter-spacing:.06em;
+    color:var(--accent-strong);
+    background:var(--accent-tint);
+    padding:6px 14px;border-radius:999px;
+    margin-bottom:16px;
+  }
+  .hero h1{font-size:clamp(32px,5vw,52px);color:var(--ink);line-height:1.1;}
+  .hero .sub{
+    font-size:17px;color:var(--ink-soft);max-width:62ch;margin-top:14px;line-height:1.7;
+  }
+  .hero .meta{
+    margin-top:6px;font-size:14px;color:var(--ink-faint);
+  }
 
-        <div id="checklist-container" class="hidden bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 pb-4 mb-6 gap-3">
-                <div>
-                    <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-teal-600"></i>
-                        <span>צ'קליסט הגעה ותחזוקת הבית בקורפוס</span>
-                    </h3>
-                    <p class="text-xs text-slate-500 mt-1">רשימת משימות מעשית לפתיחת הבית בהגעה ולסגירתו ביום העזיבה (הנתונים נשמרים בדפדפן)</p>
-                </div>
-                <button onclick="resetChecklist()" class="text-xs text-rose-600 hover:bg-rose-50 px-3 py-1.5 rounded-lg border border-rose-200 font-semibold transition-all self-start sm:self-auto">
-                    <i class="fa-solid fa-rotate-left ml-1"></i>איפוס צ'קליסט
-                </button>
-            </div>
+  /* quick facts strip */
+  .facts{
+    max-width:1080px;margin:26px auto 0;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+    background:var(--border-soft);
+    border:1px solid var(--border-soft);
+    border-radius:var(--radius-m);
+    overflow:hidden;
+  }
+  .fact{
+    background:var(--surface);padding:16px 18px;
+  }
+  .fact .n{font-family:'Frank Ruhl Libre';font-size:24px;font-weight:700;color:var(--accent-strong);}
+  .fact .l{font-size:12.5px;color:var(--ink-faint);margin-top:4px;}
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Arrival Checklist -->
-                <div>
-                    <h4 class="font-bold text-teal-800 bg-teal-50 px-3 py-2 rounded-xl border border-teal-100 text-sm mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-plane-arrival"></i>
-                        <span>צ'קליסט בהגעה לבית (Arrival)</span>
-                    </h4>
-                    <div class="space-y-3 text-sm" id="arrival-checklist">
-                        <!-- Rendered dynamically -->
-                    </div>
-                </div>
+  /* ---------- Filter bar ---------- */
+  .filterbar{
+    position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(10px) saturate(1.2);
+    -webkit-backdrop-filter:blur(10px) saturate(1.2);
+    border-bottom:1px solid var(--border-soft);
+    padding:12px 20px;
+  }
+  .filterbar-inner{max-width:1080px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+  .search{
+    flex:1 1 220px;
+    display:flex;align-items:center;gap:8px;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:999px;padding:9px 16px;
+    min-width:180px;
+  }
+  .search input{
+    border:none;outline:none;background:transparent;color:var(--ink);
+    font-family:'Heebo';font-size:14.5px;width:100%;
+  }
+  .search input::placeholder{color:var(--ink-faint);}
+  .search svg{flex:none;color:var(--ink-faint);width:16px;height:16px;}
 
-                <!-- Departure Checklist -->
-                <div>
-                    <h4 class="font-bold text-amber-800 bg-amber-50 px-3 py-2 rounded-xl border border-amber-100 text-sm mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-plane-departure"></i>
-                        <span>צ'קליסט לפני עזיבה (Departure)</span>
-                    </h4>
-                    <div class="space-y-3 text-sm" id="departure-checklist">
-                        <!-- Rendered dynamically -->
-                    </div>
-                </div>
-            </div>
-        </div>
+  .chip{
+    display:inline-flex;align-items:center;gap:7px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--ink-soft);
+    font-family:'Heebo';font-size:13.5px;font-weight:500;
+    padding:8px 14px;border-radius:999px;cursor:pointer;
+    white-space:nowrap;
+    transition:background .15s ease, color .15s ease, border-color .15s ease, transform .1s ease;
+  }
+  .chip svg{width:15px;height:15px;flex:none;}
+  .chip:hover{transform:translateY(-1px);}
+  .chip.active{
+    background:var(--cc,var(--accent));
+    border-color:var(--cc,var(--accent));
+    color:#fff;
+  }
+  .chip .cnt{
+    font-size:11px;opacity:.8;background:rgba(0,0,0,.12);
+    border-radius:999px;padding:1px 6px;
+  }
+  .chip.active .cnt{background:rgba(255,255,255,.25);}
 
-        <!-- Toast Notification -->
-        <div id="toast" class="fixed bottom-5 left-5 bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 transition-all opacity-0 pointer-events-none z-50">
-            <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400"></i>
-            <span id="toast-msg">הודעה</span>
-        </div>
+  /* ---------- Sections ---------- */
+  main{max-width:1080px;margin:0 auto;padding:30px 20px 80px;}
+  .section{margin-top:44px;}
+  .section:first-child{margin-top:8px;}
+  .section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;}
+  .section-head h2{font-size:22px;color:var(--ink);}
+  .section-head .count{font-size:13px;color:var(--ink-faint);}
+  .section-icon{
+    width:34px;height:34px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
+    background:var(--sc-tint);color:var(--sc);flex:none;
+  }
+  .section-icon svg{width:18px;height:18px;}
+  .section-title-row{display:flex;align-items:center;gap:12px;}
 
-    </main>
+  .grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;
+  }
 
-    <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 mt-12 text-xs">
-        <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
-            <div class="flex items-center justify-center gap-2 text-slate-200 font-bold text-sm">
-                <span>Korfos Peloponnese Guide</span> • <span>מדריך הבית בקורפוס, פלופונס</span>
-            </div>
-            <p>נוצר באהבה עבור בעלי הבית והאורחים בקורפוס • מחוז קורינתיה, יוון 🇬🇷</p>
-            <div class="text-[11px] text-slate-500 pt-2 border-t border-slate-800 max-w-md mx-auto">
-                טיפ מהיר: שמרו את הדף בסימניות של הטלפון כדי שיעבוד לכם בקלות במהלך החופשה!
-            </div>
-        </div>
-    </footer>
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border-soft);
+    border-radius:var(--radius-m);
+    padding:18px;
+    box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:10px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover{transform:translateY(-2px);}
+  .card-top{display:flex;align-items:flex-start;gap:12px;}
+  .card-icon{
+    width:38px;height:38px;border-radius:11px;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--cc-tint);color:var(--cc);
+  }
+  .card-icon svg{width:19px;height:19px;}
+  .card h3{font-size:17px;color:var(--ink);line-height:1.35;}
+  .card .en{font-size:12.5px;color:var(--ink-faint);margin-top:2px;font-family:'Heebo';}
+  .card p{font-size:14px;line-height:1.65;color:var(--ink-soft);margin:0;flex:1;}
+  .card-foot{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    margin-top:2px;padding-top:12px;border-top:1px dashed var(--border);
+  }
+  .dist{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:12.5px;color:var(--cc);
+    background:var(--cc-tint);padding:4px 10px;border-radius:999px;font-weight:600;
+  }
+  .maplink{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:12.5px;color:var(--ink-soft);text-decoration:none;font-weight:600;
+    border:1px solid var(--border);padding:4px 10px;border-radius:999px;
+  }
+  .maplink:hover{border-color:var(--cc);color:var(--cc);}
+  .maplink svg{width:13px;height:13px;}
 
-    <script>
-        // Data Array for Korfos Peloponnese Guide
-        const dataItems = [
-            // --- BEACHES ---
-            {
-                id: 'b1',
-                category: 'beaches',
-                title: 'חוף קורפוס המרכזי (Korfos Beach)',
-                subtitle: 'החוף של הכפר • מים שקטים כמו בריכה',
-                badge: '0 ק"מ • בתוך הכפר',
-                badgeColor: 'bg-sky-100 text-sky-800 border-sky-200',
-                image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80',
-                desc: 'החוף הביתי של קורפוס שוכן בתוך מפרץ עמוק ומוגן מרוחות, ולכן המים בו תמיד רגועים, נקיים וצלולים. מתאים מאוד לשחיית בוקר, לילדים, לשנורקלינג ולסאפ.',
-                details: 'אורך החוף כ-1 ק"מ, שילוב של חלוקי נחל עדינים וחול. לאורך החוף פזורות הטברנות של הכפר (ניתן להזמין קפה או שתייה וליהנות ממיטות שיזוף).',
-                location: 'Korfos Beach, Corinthia',
-                driveTime: '0-2 דקות (0 ק"מ / הליכה רגלית)',
-                mapUrl: 'https://maps.google.com/?q=Korfos+Beach+Corinthia'
-            },
-            {
-                id: 'b2',
-                category: 'beaches',
-                title: 'מפרץ סלונדה (Selonda Bay)',
-                subtitle: 'ה"פיורד" היווני • מים בטורקיז משגע',
-                badge: '6 ק"מ • 10 דקות',
-                badgeColor: 'bg-teal-100 text-teal-800 border-teal-200',
-                image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=600&q=80',
-                desc: 'מפרץ צר ומהפנט המוקף בהרים ירוקים ועצי אורן הנוגעים בקו המים. המים כאן בצבע טורקיז עמוק ורוגע מוחלט. מבוקש מאוד לשיוט ביאכטות ושנורקלינג.',
-                details: 'נמצא ישירות מדרום לקורפוס. הגישה ברכב ברשת שבילים או בסירה/קיאק מנמל קורפוס. חוף בתולי ללא שירותים - מומלץ להביא מים ושמשיות.',
-                location: 'Selonda Bay, Korfos',
-                driveTime: '10 דקות ברכב (6 ק"מ)',
-                mapUrl: 'https://maps.google.com/?q=Selonda+Bay+Corinthia'
-            },
-            {
-                id: 'b3',
-                category: 'beaches',
-                title: 'חוף ליכנארי (Lychnari Beach)',
-                subtitle: 'מפרץ שקט וצלול • עצי אורן וטברנה',
-                badge: '8 ק"מ • 12 דקות',
-                badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-                image: 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=600&q=80',
-                desc: 'מפרץ פסטורלי וציורי קרוב מאוד לקורפוס. החוף מורכב מחלוקים עדינים, מים צלולים כשמש ועצי אורן המעניקים צל טבעי.',
-                details: 'בחוף יש טברנה מקומית קטנה על קו המים. מקום נהדר לשחייה שקטה במרחק דקות ספורות מהבית.',
-                location: 'Lychnari Beach, Corinthia',
-                driveTime: '12 דקות נהיגה (8 ק"מ)',
-                mapUrl: 'https://maps.google.com/?q=Lychnari+Beach+Corinthia'
-            },
-            {
-                id: 'b4',
-                category: 'beaches',
-                title: 'חוף פרנגולימנו (Frangolimano Beach)',
-                subtitle: 'מפרץ אורנים בתולי • מים שקטים',
-                badge: '11 ק"מ • 14 דקות',
-                badgeColor: 'bg-cyan-100 text-cyan-800 border-cyan-200',
-                image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=600&q=80',
-                desc: 'חוף מרהיב המוקף ביער אורנים ירוק היורד עד לקו המים. מים שקטים מאד בצבע ירקרק-כחול, מעולה לשנורקלינג ולמנוחה.',
-                details: 'חוף שקט ולא עמוס. מומלץ להביא מחצלת, שמשיות ומים קרים.',
-                location: 'Frangolimano Beach, Solygeia',
-                driveTime: '14 דקות נהיגה (11 ק"מ)',
-                mapUrl: 'https://maps.google.com/?q=Frangolimano+Beach+Corinthia'
-            },
-            {
-                id: 'b5',
-                category: 'beaches',
-                title: 'מפרצי אמוני (Megalo & Mikro Amoni)',
-                subtitle: 'ארבעה מפרצונים מרהיבים • מים צלולים',
-                badge: '13 ק"מ • 16 דקות',
-                badgeColor: 'bg-teal-100 text-teal-800 border-teal-200',
-                image: 'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=600&q=80',
-                desc: 'סדרה של ארבעה מפרצים מרהיבים (מגאלו אמוני, מיקרו אמוני, קלוגרולימנו ופרנגולימנו) השוכנים צפונית לקורפוס. מים צלולים כקריסטל ונוף פראי.',
-                details: 'במגאלו אמוני יש טברנה מעולה הפועלת בקיץ. מומלץ להצטייד בנעלי מים לשחייה בין הסלעים והשנורקלים.',
-                location: 'Megalo Amoni Beach, Corinthia',
-                driveTime: '15-18 דקות נהיגה (13 ק"מ)',
-                mapUrl: 'https://maps.google.com/?q=Megalo+Amoni+Beach+Corinthia'
-            },
-            {
-                id: 'b6',
-                category: 'beaches',
-                title: 'חוף אלמירי / קלמקי (Almiri Beach)',
-                subtitle: 'טברנות דגים • נביעת מים מתוקים',
-                badge: '18 ק"מ • 20 דקות',
-                badgeColor: 'bg-slate-100 text-slate-800 border-slate-200',
-                image: 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=600&q=80',
-                desc: 'חוף נחמד ופופולרי בדרך מקורינתוס לקורפוס. ידוע בנביעת מים מתוקים קרים מתחת לפני הים בקרבת החוף וטברנות דגים מקומיות.',
-                details: 'נקודת עצירה מצוינת לקפה או טבילה קלה בדרך מאתונה/קורינתוס אל קורפוס.',
-                location: 'Kato Almiri, Corinthia',
-                driveTime: '20 דקות נהיגה (18 ק"מ)',
-                mapUrl: 'https://maps.google.com/?q=Almiri+Beach+Corinthia'
-            },
-            {
-                id: 'b7',
-                category: 'beaches',
-                title: 'חוף העיר השקועה (Sunken City Beach - Vagionia)',
-                subtitle: 'אפידאוורוס • שנורקלינג מעל עיר עתיקה',
-                badge: '25 ק"מ • 28 דקות',
-                badgeColor: 'bg-purple-100 text-purple-800 border-purple-200',
-                image: 'https://images.unsplash.com/photo-1682687220063-4742bd7fd538?auto=format&fit=crop&w=600&q=80',
-                desc: 'חוויה יוצאת דופן: חוף שקט באפידאוורוס העתיקה שבו במרחק מטרים ספורים מהחוף, בעומק של 1.5-2 מטר בלבד, שוכנים שרידי מבנים עתיקים ומצדדים רומיים מתחת למים!',
-                details: 'קחו שנורקל ומסיכה ותראו את המבנים והכדים העתיקים במים. החוף רגוע ולידו יש מטעי תפוזים וטברנות נהדרות.',
-                location: 'Sunken City Epidaurus (Vagionia Beach)',
-                driveTime: '28 דקות נהיגה (25 ק"מ)',
-                mapUrl: 'https://maps.google.com/?q=Sunken+City+Ancient+Epidaurus'
-            },
-            {
-                id: 'b8',
-                category: 'beaches',
-                title: 'חוף גיאלאסי (Gialasi Beach)',
-                subtitle: 'חוף מאורגן • ביץ\' ברים ומים רדוודים',
-                badge: '27 ק"מ • 30 דקות',
-                badgeColor: 'bg-amber-100 text-amber-800 border-amber-200',
-                image: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=600&q=80',
-                desc: 'החוף המרכזי והמאורגן באזור אפידאוורוס. חוף חול וחלוקים ארוך, עם מיטות שיזוף, שמשיות, ספורט ימי, ביץ\' ברים תגוסים ומים רדודים ורגועים.',
-                details: 'מצוין ליום כיף מלא עם שירותים, מקלחות, שדרת מסעדות וקפה על קו המים.',
-                location: 'Gialasi Beach, Ancient Epidaurus',
-                driveTime: '30 דקות נהיגה (27 ק"מ)',
-                mapUrl: 'https://maps.google.com/?q=Gialasi+Beach+Epidaurus'
-            },
+  .card[hidden]{display:none;}
 
-            // --- SUPERMARKETS & SHOPPING ---
-            {
-                id: 's1',
-                category: 'supermarkets',
-                title: 'צרכניות ומאפיות בקורפוס (Local Korfos Stores)',
-                subtitle: 'מצרכים יומיים • לחם טרי • מים ופירות',
-                badge: 'בכפר קורפוס',
-                badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-                image: 'https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=600&q=80',
-                desc: 'בתוך הכפר קורפוס יש 2-3 מיני-מרקטים מקומיים, מאפייה יומית עם פאי יווני (ספנקופיטה) ולחם טרי, וירקן נייד שעובר בבקרים. מושלם להשלמות יומיומיות.',
-                details: 'פתוח מדי יום עד שעות הערב המאוחרות בקיץ. מוצרים בסיסיים: חלב, גבינות, מים מינרליים, יינות, חומרי ניקוי ופחמים למנגל.',
-                location: 'Korfos Main Street',
-                driveTime: '1-3 דקות (הליכה/נסיעה קצרה)',
-                mapUrl: 'https://maps.google.com/?q=Supermarket+Korfos+Corinthia'
-            },
-            {
-                id: 's2',
-                category: 'supermarkets',
-                title: 'העיירה סופיקו - קניות ומרפאה (Sofiko Village Shops)',
-                subtitle: 'קצבייה • בית מרקחת • כספומט ATM',
-                badge: '15 דקות מהבית',
-                badgeColor: 'bg-teal-100 text-teal-800 border-teal-200',
-                image: 'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=600&q=80',
-                desc: 'סופיקו היא העיירה המרכזית הקרובה לקורפוס. כאן תמצאו קצבייה מעולה (Kreatopoleio) לבשרים טריים למנגל, בית מרקחת, כספומט (ATM) וסופרמרקטים בינוניים.',
-                details: 'מומלץ לעצור בסופיקו בדרך לקורפוס כדי להצטייד בבשר איכותי, תרופות וכסף מזומן.',
-                location: 'Sofiko, Corinthia',
-                driveTime: '15 דקות נהיגה (12 ק"מ)',
-                mapUrl: 'https://maps.google.com/?q=Sofiko+Corinthia+Pharmacy'
-            },
-            {
-                id: 's3',
-                category: 'supermarkets',
-                title: 'רשת Lidl קורינתוס (Lidl Corinthos)',
-                subtitle: 'סופר ענק • מחירים מעולים • קניות גדולות',
-                badge: 'קניות גדולות להגעה',
-                badgeColor: 'bg-blue-100 text-blue-800 border-blue-200',
-                image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80',
-                desc: 'הסופרמרקט הגדול והמשתלם ביותר לקנייה הראשונית הגדולה כשמגיעים מהשדה/מאתונה. מגוון ענק של מוצרים, בשרים, מוצרי ניקיון ושתייה במחירים מעולים.',
-                details: 'ממוקם ליד תעלת קורינתוס. מומלץ לעצור שם בדרך מאתונה לקורפוס ולמלא את תא המטען ברכב.',
-                location: 'Lidl, Isthmos Korinthou',
-                driveTime: '35 דקות נהיגה',
-                mapUrl: 'https://maps.google.com/?q=Lidl+Isthmus+Corinth'
-            },
-            {
-                id: 's4',
-                category: 'supermarkets',
-                title: 'מרכז הקניות ותעלת קורינתוס (AB Vassilopoulos & Jumbo)',
-                subtitle: 'סופרמרקט פרימיום • ציוד לבית ולים (Jumbo)',
-                badge: 'מרכז מסחרי ראשי',
-                badgeColor: 'bg-indigo-100 text-indigo-800 border-indigo-200',
-                image: 'https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=600&q=80',
-                desc: 'באזור תעלת קורינתוס תמצאו את סופרמרקט AB Vassilopoulos (איכות גבוהה, גבינות ויינות מובחרים) וכן חנות ענק של Jumbo - אידיאלי לציוד לים, שמשיות, כלי בית ומשחקים.',
-                details: 'שעות פתיחה: ימים א-ו 08:00-21:00 (סגור בימי ראשון לפי החוק ביוון).',
-                location: 'Corinth Retail Park',
-                driveTime: '35 דקות נהיגה',
-                mapUrl: 'https://maps.google.com/?q=AB+Vassilopoulos+Corinth'
-            },
+  /* practical info panel */
+  .panel{
+    background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius-m);
+    padding:20px 22px;box-shadow:var(--shadow);
+  }
+  .kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px 24px;margin-top:6px;}
+  .kv .item b{display:block;font-size:13px;color:var(--ink-faint);font-weight:500;margin-bottom:3px;}
+  .kv .item span{font-size:14.5px;color:var(--ink);}
 
-            // --- TOWNS & ATTRACTIONS ---
-            {
-                id: 't1',
-                category: 'towns',
-                title: 'סופיקו (Sofiko Village)',
-                subtitle: 'כפר ההרים המסורתי • יער אורנים • טברנות בשר',
-                badge: '15 דקות נהיגה',
-                badgeColor: 'bg-amber-100 text-amber-800 border-amber-200',
-                image: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=600&q=80',
-                desc: 'כפר יווני מסורתי בלב חורשת אורנים צפופה. מפורסם בכיכר הכפר הציורית, בכנסיות הביזנטיות העתיקות ובטברנות הבשרים המצוינות (Souvlaki & Paidakia).',
-                details: 'מקום מעולה לארוחת ערב כפרית או לקפה יווני בכיכר תחת עצי הדולב.',
-                location: 'Sofiko Village',
-                driveTime: '15 דקות נהיגה',
-                mapUrl: 'https://maps.google.com/?q=Sofiko+Corinthia'
-            },
-            {
-                id: 't2',
-                category: 'towns',
-                title: 'אפידאוורוס העתיקה (Ancient Epidaurus)',
-                subtitle: 'התיאטרון הרומי המפורסם • מפרץ דייגים קסום',
-                badge: 'אתר מורשת עולמי',
-                badgeColor: 'bg-purple-100 text-purple-800 border-purple-200',
-                image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80',
-                desc: 'אחד האתרים המרשימים ביוון! תיאטרון אפידאוורוס העתיק הידוע באקוסטיקה המושלמת שלו, לצד עיירת הנמל השקטה Palaia Epidaurus המלאה בטברנות דגים ועצי תפוז.',
-                details: 'בימי הקיץ מתקיימים בתיאטרון מופעי דרמה ומוזיקה בינלאומיים (פסטיבל אפידאוורוס).',
-                location: 'Ancient Theater of Epidaurus',
-                driveTime: '30-35 דקות נהיגה',
-                mapUrl: 'https://maps.google.com/?q=Ancient+Theater+of+Epidaurus'
-            },
-            {
-                id: 't3',
-                category: 'towns',
-                title: 'תעלת קורינתוס ומצודת אקרוקורינתוס (Acrocorinth)',
-                subtitle: 'פלא הנדסי • מצודה פנורמית עוצרת נשימה',
-                badge: 'חובה לכל אורח',
-                badgeColor: 'bg-rose-100 text-rose-800 border-rose-200',
-                image: 'https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&w=600&q=80',
-                desc: 'תעלת קורינתוס שנחצבה בסלע האדיר מחברת בין המפרץ הסרוני למפרץ קורינתוס. בסמוך לה עולה ההר של אקרוקורינתוס - מצודה ונציאנית-עות\'מאנית אדירה עם תצפית 360 מעלות.',
-                details: 'מומלץ לעצור בגשר הישן לצפייה באוניות העוברות בתעלה ולעלות למצודה לקראת שקיעה.',
-                location: 'Corinth Canal & Acrocorinth',
-                driveTime: '35-40 דקות נהיגה',
-                mapUrl: 'https://maps.google.com/?q=Corinth+Canal'
-            },
-            {
-                id: 't4',
-                category: 'towns',
-                title: 'נאפפליו (Nafplio)',
-                subtitle: 'העיר היפה בפלופונס • סמטאות ונציאניות • מצודת פלאמידי',
-                badge: 'יום טיול מושלם',
-                badgeColor: 'bg-gold/20 text-amber-900 border-amber-300',
-                image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80',
-                desc: 'בירת יוון הראשונה לשעבר. עיר חוף רומנטית מדהימה עם סמטאות אבן צבעוניות, חנויות בוטיק, גלידריות איטלקיות מעולות ומצודת Palamidi החולשת על המפרץ.',
-                details: 'כשעה נהיגה מקורפוס. מתאים מאוד לסיור אחה"כ, ארוחת ערב רומנטית וטיול לאורך הטיילת.',
-                location: 'Nafplio Old Town',
-                driveTime: '60 דקות נהיגה',
-                mapUrl: 'https://maps.google.com/?q=Nafplio+Old+Town'
-            },
-            {
-                id: 't5',
-                category: 'towns',
-                title: 'מיקנה העתיקה (Mycenae)',
-                subtitle: 'ערש הציוויליזציה • שער האריות • קבר אגממנון',
-                badge: 'חובבי היסטוריה',
-                badgeColor: 'bg-amber-100 text-amber-800 border-amber-200',
-                image: 'https://images.unsplash.com/photo-1599423300746-b62533397364?auto=format&fit=crop&w=600&q=80',
-                desc: 'האקרופוליס של מיקנה העתיקה, מוקד התרבות המיקנית הקדומה. סיור מרתק בין שערי אבן ענקיים, מבצרים עתיקים ומוזיאון ארכיאולוגי עשיר.',
-                details: 'נמצאת בדרך בין קורינתוס לנאפפליו. מומלץ לשלב ביום טיול עם נאפפליו.',
-                location: 'Mycenae Archaeological Site',
-                driveTime: '50 דקות נהיגה',
-                mapUrl: 'https://maps.google.com/?q=Mycenae+Archaeological+Site'
-            },
+  .empty{
+    text-align:center;padding:60px 20px;color:var(--ink-faint);font-size:14.5px;display:none;
+  }
 
-            // --- HIKES & NATURE ---
-            {
-                id: 'h1',
-                category: 'hikes',
-                title: 'מסלול מנזר פנאגיה סטיירי (Panagia Stiri Monastery Hike)',
-                subtitle: 'תצפית פנורמית על כל מפרץ קורפוס',
-                badge: 'מסלול הבית!',
-                badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-                image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80',
-                desc: 'מסלול הליכה יפהפה העולה מקורפוס אל מנזר פנאגיה סטיירי העתיק השוכן במעלה ההר. מהמנזר נשקפת תצפית מרהיבה על המפרץ כולו ועל האיים באופק.',
-                details: 'דרגת קושי: בינונית. משך הליכה: כ-1.5 עד 2 שעות הלוך חזור. מומלץ לצאת מוקדם בבוקר ולהצטייד במים מרובים.',
-                location: 'Panagia Stiri Korfos Trail',
-                driveTime: 'מתחיל ישירות מקורפוס',
-                mapUrl: 'https://maps.google.com/?q=Panagia+Stiri+Korfos'
-            },
-            {
-                id: 'h2',
-                category: 'hikes',
-                title: 'שביל חוף מפרץ סלונדה (Selonda Coastal Trek)',
-                subtitle: 'הליכה בין אורנים לקו המים • פיורד פראי',
-                badge: 'נופים משגעים',
-                badgeColor: 'bg-teal-100 text-teal-800 border-teal-200',
-                image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80',
-                desc: 'מסלול הליכה רגוע לאורך קו החוף הפראי והאורנים בין קורפוס למפרץ סלונדה. הזדמנות ליהנות מניחוח האורנים, רוח הים ומפגש עם מפרצונים נסתרים.',
-                details: 'דרגת קושי: קלה-בינונית. מומלץ לנעול נעלי הליכה סגורות ולהביא בגד ים לטבילה בסיום.',
-                location: 'Korfos to Selonda Trail',
-                driveTime: 'יציאה מדרום קורפוס',
-                mapUrl: 'https://maps.google.com/?q=Selonda+Bay+Corinthia'
-            },
-            {
-                id: 'h3',
-                category: 'hikes',
-                title: 'שבילי יער האורנים של סופיקו (Sofiko Pine Forest Trails)',
-                subtitle: 'אוויר הרים צלול • יער אורנים עמוק',
-                badge: 'טבע ירוק',
-                badgeColor: 'bg-olive/20 text-lime-900 border-lime-300',
-                image: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&q=80',
-                desc: 'אזור סופיקו מוקף באחד מיערות האורנים הגדולים והשמורים במחוז קורינתיה. היער מרושת בשבילי עפר המתאימים להליכה רגלית, ריצת בוקר או רכיבת אופניים.',
-                details: 'מסלולים מוצלים יחסית. מומלץ לסיים בקפה או ארוחה בכיכר הכפר סופיקו.',
-                location: 'Sofiko Forest Area',
-                driveTime: '15 דקות נהיגה',
-                mapUrl: 'https://maps.google.com/?q=Sofiko+Corinthia'
-            },
+  footer{
+    max-width:1080px;margin:0 auto;padding:0 20px 60px;color:var(--ink-faint);font-size:12.5px;line-height:1.8;
+  }
+  footer a{color:var(--ink-faint);text-decoration:underline;}
 
-            // --- HOUSE TIPS & LOCAL ESSENTIALS ---
-            {
-                id: 'p1',
-                category: 'tips',
-                title: 'מים ותשתיות בבית בקורפוס',
-                subtitle: 'מי ברז • משאבת מים (Piestiko) • דוד שמש',
-                badge: 'חיוני לבית',
-                badgeColor: 'bg-rose-100 text-rose-800 border-rose-200',
-                image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
-                desc: 'מי הברז בקורפוס מיועדים למקלחת, שטיפה ובישול. לשתייה מומלץ להשתמש בבקבוקי מים מינרליים (ניתן לקנות שישיות בזול בסופר).',
-                details: 'בדקו בהגעה שברז המים הראשי בחוץ (Diakoptis) פתוח ושמשאבת המים (Piestiko) מחוברת לחשמל. להפעלת דוד החשמל בימים מעוננים - הדליקו את המפסק בלוח.',
-                location: 'בית בקורפוס',
-                driveTime: 'בבית',
-                mapUrl: 'https://maps.google.com/?q=Korfos+Corinthia'
-            },
-            {
-                id: 'p2',
-                category: 'tips',
-                title: 'טברנות ודגים בנמל קורפוס',
-                subtitle: 'דגים טריים • דוראדה • תמנון על הגריל',
-                badge: 'חוויה קולינרית',
-                badgeColor: 'bg-amber-100 text-amber-800 border-amber-200',
-                image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80',
-                desc: 'קורפוס ידועה בטברנות הדגים המעולות שלה היושבות ממש על קו המים בנמל. הדייגים המקומיים מביאים מדי בוקר דגים טריים (Tsipoura, Lavraki) ותמנונים.',
-                details: 'טברנות מומלצות בנמל: Papaioannou, Stavedo, Celonda. מומלץ להזמין סלט יווני, ציזיקי, דג על הגריל ואוזו קר.',
-                location: 'Korfos Harbor Tavernas',
-                driveTime: 'במרחק הליכה',
-                mapUrl: 'https://maps.google.com/?q=Korfos+Taverna+Greece'
-            },
-            {
-                id: 'p3',
-                category: 'tips',
-                title: 'נהיגה, דלק וחירום באזור',
-                subtitle: 'כביש סופיקו-קורפוס • מרפאות • חירום 112',
-                badge: 'בטיחות וחירום',
-                badgeColor: 'bg-slate-200 text-slate-800 border-slate-300',
-                image: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=600&q=80',
-                desc: 'הכביש היורד מסופיקו לקורפוס הוא כביש מפותל ויפהפה. בלילה יש לנהוג בזהירות מחשש לעזים או חזירי בר שחוצים את הכביש.',
-                details: 'תחנת דלק הקרובה ביותר נמצאת בסופיקו. מרכז רפואי (Health Center) נמצא בסופיקו / בית חולים קורינתוס (35 דק\'). מספר חירום אירופי: 112.',
-                location: 'Korfos & Sofiko Area',
-                driveTime: 'חיוני',
-                mapUrl: 'https://maps.google.com/?q=Sofiko+Health+Center'
-            }
-        ];
+  @media (max-width:640px){
+    .facts{grid-template-columns:repeat(2,1fr);}
+    .hero{padding:32px 16px 22px;}
+  }
 
-        // Checklist Data
-        const arrivalTasks = [
-            { id: 'a1', text: 'פתיחת שיבר מים ראשי בחוץ (Diakoptis Nerou)' },
-            { id: 'a2', text: 'הפעלת מפסק החשמל הראשי בלוח (General Switch)' },
-            { id: 'a3', text: 'בדיקה וחיבור משאבת המים (Piestiko)' },
-            { id: 'a4', text: 'פתיחת תריסים וחלונות לאוורור הבית' },
-            { id: 'a5', text: 'הדלקת המקרר והמקפיא והגדרת טמפרטורה' },
-            { id: 'a6', text: 'בדיקת חיבור האינטרנט וה-Wi-Fi' },
-            { id: 'a7', text: 'בדיקת מים חמים / הפעלת דוד השמש או המפסק' },
-            { id: 'a8', text: 'הצטיידות בשישיית מים מינרליים מהסופר בכפר' }
-        ];
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
 
-        const departureTasks = [
-            { id: 'd1', text: 'סגירת ברז המים הראשי בחוץ (חשוב למניעת נזילות!)' },
-            { id: 'd2', text: 'ניקוי וריקון המקרר והמקפיא מכל מזון מתקלקל' },
-            { id: 'd3', text: 'כיבוי דוד החשמל והמזגנים בכל החדרים' },
-            { id: 'd4', text: 'סגירה ונעילה של כל החלונות והתריסים (Parathyrafylia)' },
-            { id: 'd5', text: 'פינוי כל פחי האשפה לצפרדע הירוקה בנמל קורפוס' },
-            { id: 'd6', text: 'איסוף כרטיסי מפתח/מפתחות והפקדתם במקום המיועד' },
-            { id: 'd7', text: 'הורדת מפסקים לא חיוניים בלוח החשמל (לפי הצורך)' },
-            { id: 'd8', text: 'נעילת הדלת הראשית והשער' }
-        ];
+<div class="hero">
+  <svg class="hero-wave" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,30 C150,60 350,0 600,30 C850,60 1050,0 1200,30 L1200,60 L0,60 Z" fill="var(--accent-tint)"></path>
+  </svg>
+  <div class="hero-inner">
+    <span class="eyebrow">⚓ קורפוס, קורינתיה · מפרץ הסרוניקוס</span>
+    <h1>מדריך הבית בקורפוס</h1>
+    <p class="sub">כל מה שצריך לדעת כשמגיעים לבקר בבית ביוון: החופים הכי שווים באזור, איפה קונים אוכל וציוד, טרקים ומסלולי הליכה, אתרים היסטוריים, טיולי יום מהבית — והמידע השימושי (מרחקים, חירום, שעות פתיחה) לכל ביקור.</p>
+    <p class="meta">כפר דייגים קטן על מפרץ סופיקו, כ-30 ק״מ מקורינתוס וכ-110 ק״מ מאתונה. אפשר לסנן לפי נושא בסרגל למטה, או לחפש שם ספציפי.</p>
+    <div class="facts">
+      <div class="fact"><div class="n">30 ק״מ</div><div class="l">עד קורינתוס (כ-35 דק׳)</div></div>
+      <div class="fact"><div class="n">~10 ק״מ</div><div class="l">עד סופיקו — הסופר הקרוב</div></div>
+      <div class="fact"><div class="n">110 ק״מ</div><div class="l">עד אתונה (כ-1:30 שעה)</div></div>
+      <div class="fact"><div class="n">מאי–אוק׳</div><div class="l">עונת רחצה נוחה בים</div></div>
+    </div>
+  </div>
+</div>
 
-        let currentTab = 'all';
-        let searchQuery = '';
-        let favorites = JSON.parse(localStorage.getItem('korfos_favs') || '[]');
-        let checklistState = JSON.parse(localStorage.getItem('korfos_checklist') || '{}');
+<div class="filterbar">
+  <div class="filterbar-inner" id="filterbar"></div>
+</div>
 
-        // Initialize App
-        document.addEventListener('DOMContentLoaded', () => {
-            renderCards();
-            renderChecklists();
-            updateFavBadges();
-        });
+<main>
+  <div id="sections"></div>
+  <div class="empty" id="emptyState">לא נמצאו תוצאות מתאימות — נסו לנקות את החיפוש או לבחור "הכל".</div>
+</main>
 
-        // Switch Tabs
-        function switchTab(tabId) {
-            currentTab = tabId;
-            
-            // Update Tab UI
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            const activeBtn = document.getElementById(`tab-${tabId}`);
-            if(activeBtn) activeBtn.classList.add('active');
+<footer>
+  עודכן: ספטמבר 2026. שמות בתי עסק, מחירים ושעות פעילות בכפר קטן כמו קורפוס משתנים לפי עונה — כדאי לוודא ב-Google Maps או בשלט על המקום לפני שנוסעים במיוחד. מרחקים וזמני נסיעה הם הערכות דרך כביש, ייתכנו הפרשים קטנים לפי המסלול בפועל.
+</footer>
 
-            const grid = document.getElementById('cards-grid');
-            const checklist = document.getElementById('checklist-container');
-            const welcomeBanner = document.getElementById('quick-welcome-banner');
+<script>
+(function(){
+  document.documentElement.setAttribute('dir','rtl');
+  document.documentElement.setAttribute('lang','he');
+})();
 
-            if (tabId === 'checklist') {
-                grid.classList.add('hidden');
-                welcomeBanner.classList.add('hidden');
-                checklist.classList.remove('hidden');
-                document.getElementById('section-title').innerHTML = `<i class="fa-solid fa-clipboard-check text-teal-600"></i> <span>צ'קליסט הגעה ותחזוקת הבית</span>`;
-                document.getElementById('items-count').innerText = `${arrivalTasks.length + departureTasks.length} משימות`;
-            } else {
-                checklist.classList.add('hidden');
-                welcomeBanner.classList.remove('hidden');
-                grid.classList.remove('hidden');
-                renderCards();
-            }
-        }
+// ---------- Icons ----------
+const ICONS = {
+  beach: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18c1.5 1.3 3 1.3 4.5 0s3-1.3 4.5 0 3 1.3 4.5 0 3-1.3 4.5 0"/><path d="M2 22c1.5 1.3 3 1.3 4.5 0s3-1.3 4.5 0 3 1.3 4.5 0 3-1.3 4.5 0"/><path d="M13 3l6 6-9 3z"/><path d="M14.5 8.5L6 17"/></svg>',
+  food: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v7a2 2 0 0 0 2 2v11"/><path d="M7 2v7"/><path d="M11 2v7"/><path d="M17 2c-1.7 0-3 2-3 5s1.3 5 3 5v10"/></svg>',
+  shop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg>',
+  hike: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="5" r="2"/><path d="M14.5 22l3-8 2.5 3 2-1"/><path d="M9 22l3-6-2.5-3.5L12 8"/><path d="M4 22l5-10 2 2"/></svg>',
+  history: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V9M9 21V9M15 21V9M19 21V9"/><path d="M2 9l10-6 10 6"/></svg>',
+  daytrip: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13"/><rect x="2.5" y="13" width="19" height="6" rx="1.5"/><circle cx="7" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/></svg>',
+  info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.5" r="0.9" fill="currentColor" stroke="none"/></svg>',
+  pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.3"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>'
+};
 
-        function renderCards() {
-            const grid = document.getElementById('cards-grid');
-            grid.innerHTML = '';
+// ---------- Category metadata ----------
+const CATS = [
+  {id:'beach',   label:'חופים',            cc:'--c-beach'},
+  {id:'food',    label:'אוכל וקפה',        cc:'--c-food'},
+  {id:'shop',    label:'קניות ושירותים',    cc:'--c-shop'},
+  {id:'hike',    label:'טבע וטיולים',      cc:'--c-hike'},
+  {id:'history', label:'היסטוריה ותרבות',  cc:'--c-history'},
+  {id:'daytrip', label:'טיולי יום',        cc:'--c-daytrip'},
+  {id:'info',    label:'מידע שימושי',      cc:'--c-info'},
+];
 
-            let filtered = dataItems.filter(item => {
-                const matchesTab = (currentTab === 'all') || (item.category === currentTab);
-                const matchesSearch = item.title.includes(searchQuery) || 
-                                      item.subtitle.includes(searchQuery) || 
-                                      item.desc.includes(searchQuery) ||
-                                      item.location.includes(searchQuery);
-                return matchesTab && matchesSearch;
-            });
+// ---------- Content data ----------
+const SECTIONS = [
+  {
+    cat:'beach', title:'חופים באזור', icon:'beach',
+    items:[
+      {name:'חוף קורפוס', en:'Korfos Beach', dist:'0 ק״מ · בכפר עצמו', desc:'חוף החלוקי-חול הראשי של הכפר, במפרץ סגור ורדוד שכמעט תמיד שקט — טוב לילדים ולשנורקלינג בין הסלעים (דגים, קיפודי ים, תמנונים). לאורך החוף טברנות, ביסטרו וקפה, השכרת מיטות ושמשיות וסירות. חניה ברחוב בלבד, ללא מציל.', map:'Korfos Beach, Korfos, Greece'},
+      {name:'קלוגרולימנו', en:'Kalogerolimano', dist:'כ-10 ק״מ · 15 דק׳', desc:'מפרץ טבעי גדול עם מים צלולים וקריסטליים בין גבעות ירוקות, ליד סופיקו בדרך לאפידאברוס. חוף חלוקים לבנים, מים עמוקים יחסית, לא מאורגן — כדאי להביא הכל (מים, צל, אוכל).', map:'Kalogerolimano Beach Korinthia Greece'},
+      {name:'פרנגקולימנו', en:'Fragkolimano', dist:'כ-8 ק״מ · 12 דק׳', desc:'שני מפרצונים חלוקיים באזור סוליגיה, עם עצים שמגיעים כמעט עד המים ומספקים צל טבעי. יש קנטינה קטנה במקום וגישה נוחה בכביש אספלט עד החוף.', map:'Fragkolimano Beach Solygeia Greece'},
+      {name:'מיקרו ומגלו אמוני', en:'Mikro & Megalo Amoni', dist:'כ-11 ק״מ · 15 דק׳', desc:'שני מפרצונים קסומים על המפרץ הסרוניקוס, בגישה מכביש קורינתוס–אפידאברוס. המפרץ הגדול (מגלו) שקט יותר; הקטן (מיקרו) קרוב יותר לבתי הארחה.', map:'Megalo Amoni Beach Korinthia Greece'},
+      {name:'אלמירי (קאטו אלמירי)', en:'Almyri', dist:'כ-50 ק״מ · 45–55 דק׳', desc:'חוף מיוחד לנסיעה שלמה — לא ליד הבית, אבל שווה יום מלא: מגלשת מים טבעית שיוצר נחל מתוק הזורם לים, מים טורקיז, וביצה קטנה עם שבילי הליכה. מומלץ נעלי מים כי הסלעים חלקלקים ליד הזרם.', map:'Almyri Beach Korinthia Greece'},
+      {name:'קלאמיאנוס — צלילה בין חורבות', en:'Kalamianos', dist:'כ-3 ק״מ · 5 דק׳', desc:'ממש ליד קורפוס: שרידי נמל מיקני (תקופת הברונזה) ששקועים חלקית בים. אתר ארכיאולוגי מוכר בינלאומית ומקום שנורקלינג ייחודי — לשחות מעל היסטוריה בת 3,500 שנה.', map:'Kalamianos Korfos Greece'},
+    ]
+  },
+  {
+    cat:'hike', title:'טבע וטיולי הליכה', icon:'hike',
+    items:[
+      {name:'המסלול סופיקו–קורפוס', en:'Sofiko–Korfos Trail', dist:'התחלה בסופיקו · כ-10 ק״מ', desc:'מסלול הליכה נוח (רמה קלה, מתאים לכולם) של כ-4 שעות מהתיאטרון העתיק בסוליגיה שבסופיקו ועד חוף קורפוס. עובר ביער אורנים, לאורך נחל זסטני, עם נוף לשני הכפרים ולים — ומסתיים בטבילה בחוף. מומלץ נעלי הליכה, מקל טיולים, מים וכובע.', map:'Sofiko Greece'},
+      {name:'טיילת החוף של קורפוס', en:'Korfos coastal walk', dist:'מסביב למפרץ · כ-1 שעה הלוך-חזור', desc:'הליכה קלה ונעימה לאורך קו החוף של המפרץ, מבתי הדייגים ועד הסלעים שבקצה — טובה לשקיעה, ולראות את סירות הדייגים והבריכות הצפות של גידול הדגים במרחק.', map:'Korfos Greece'},
+      {name:'מסלולי Wikiloc באזור סופיקו', en:'Sofikon trails on Wikiloc', dist:'משתנה', desc:'לאזור סוליגיה-סופיקו יש כמה מסלולי הליכה ורכיבה נוספים שתועדו על ידי מטיילים באתר Wikiloc (חיפוש "Sofikon") — כולל קבצי GPX להורדה, שימושי אם רוצים לתכנן טיול עצמאי.', map:'Sofiko Korinthia Greece'},
+    ]
+  },
+  {
+    cat:'food', title:'אוכל, קפה ובארים', icon:'food',
+    items:[
+      {name:'Selana', en:'סלאנה', dist:'על החוף', desc:'דגים טריים ומזה על קו המים — טברנה קלאסית לארוחת דגים איטית מול הים.', map:'Selana Korfos Greece'},
+      {name:'To Ostrako', en:'טו אוסטרקו', dist:'על החוף', desc:'פירות ים ונוף פנורמי; המנה שמדברים עליה היא ריזוטו לובסטר-שעורה (קריתרוטו).', map:'Ostrako Korfos Greece'},
+      {name:'Stavedo-Korfos', en:'סטבדו-קורפוס', dist:'בכפר', desc:'טברנה נוספת עם דגש על פירות ים ודגים.', map:'Stavedo Korfos Greece'},
+      {name:'Nostos', en:'נוסטוס', dist:'בכפר', desc:'סלטים ומנות דגים — אופציה קלילה יותר.', map:'Nostos Korfos Greece'},
+      {name:'טברנת קורפוס', en:'Korfos Taverna', dist:'במרכז הכפר', desc:'מטבח יווני מסורתי, בישולי בית (מגירבטה).', map:'Korfos Taverna Greece'},
+      {name:'Antonis', en:'אנטוניס', dist:'בכפר', desc:'דגים, בשרים ומנות מבושלות — תפריט רחב למי שבא בחבורה עם טעמים שונים.', map:'Antonis Korfos Greece'},
+      {name:'Exo All Day', en:'אקסו אול דיי', dist:'על החוף', desc:'קפה כל היום, פרפה ומקום נעים לשבת בבוקר לפני החוף.', map:'Exo All Day Korfos Greece'},
+      {name:'Nautilus', en:'נאוטילוס', dist:'על החוף', desc:'בית קפה עם קפה איכותי (specialty coffee).', map:'Nautilus Korfos Greece'},
+      {name:'Anemos', en:'אנמוס', dist:'בכפר', desc:'אווירה רגועה עם נוף לים — טוב לקוקטייל בשעת השקיעה.', map:'Anemos Korfos Greece'},
+    ]
+  },
+  {
+    cat:'shop', title:'קניות ושירותים יומיומיים', icon:'shop',
+    items:[
+      {name:'מיני-מרקטים בקורפוס', en:'Local mini-markets', dist:'בכפר', desc:'בכפר עצמו יש כמה מיני-מרקטים/קיוסקים לצרכים בסיסיים — לחם, קרח, משקאות, חטיפים. ההיצע קטן ומשתנה לפי עונה, כדאי לבדוק ב-Google Maps מה פתוח כרגע.', map:'Korfos Greece'},
+      {name:'סופיקו — הסופר והשירותים הקרובים', en:'Sofiko', dist:'כ-10 ק״מ · 12–15 דק׳', desc:'הכפר הגדול והמרכזי הקרוב ביותר: סופרמרקט, מאפייה, בית מרקחת, בנק/ATM ותחנת דלק. זה היעד המעשי לקניות שוטפות בלי לנסוע עד קורינתוס.', map:'Sofiko Korinthia Greece'},
+      {name:'קורינתוס (עיר) — קניות גדולות', en:'Korinthos city', dist:'כ-30 ק״מ · 35 דק׳', desc:'רשתות סופר גדולות (AB Vasilopoulos, Sklavenitis, Lidl ועוד), קניון Korinthos Mall, בתי מרקחת גדולים ובנקים — היעד לקניה גדולה או ציוד מיוחד.', map:'Korinthos Greece'},
+      {name:'בית חולים / טיפול רפואי דחוף', en:'Hospital', dist:'קורינתוס, כ-30 ק״מ', desc:'לטיפול רפואי מעבר לבסיסי — בית החולים הכללי של קורינתוס. במקרה חירום להתקשר קודם ל-166 (EKAB, אמבולנס) או 112.', map:'General Hospital of Korinthos'},
+    ]
+  },
+  {
+    cat:'history', title:'היסטוריה ותרבות מקומית', icon:'history',
+    items:[
+      {name:'הנמל המיקני קלאמיאנוס', en:'Mycenaean Port of Kalamianos', dist:'כ-3 ק״מ', desc:'עיר נמל מתקופת הברונזה (המילניום ה-2 לפנה״ס), שחלקה שקוע כיום בים. נחקר על ידי בית הספר האמריקאי לחקר קלאסי בשיתוף אוניברסיטת McMaster. ממצאי חרסים בעומק רדוד מאפשרים לשחות ולחקור בין השרידים.', map:'Kalamianos Korfos Greece'},
+      {name:'כנסיית הפנאגיה טו סטירי', en:'Panagia tou Stiri', dist:'סמוך לכפר', desc:'מונומנט ביזנטי מהמאה ה-11, מיוחס למסורת של אגיוס לוקאס (הקדוש לוקאס) שהתבודד באזור.', map:'Panagia tou Stiri Korfos Greece'},
+      {name:'כנסיית אגיה אנה', en:'Agia Anna', dist:'ממערב לכפר', desc:'מבנה של מנזר קתולי לשעבר, ממערב לקורפוס — עדות למגוון הדתי ההיסטורי של האזור.', map:'Agia Anna Korfos Greece'},
+      {name:'כנסיית זואודוכוס פיגי', en:'Zoodochos Pigi', dist:'במרכז הכפר', desc:'כנסיית הקהילה הראשית של קורפוס, נבנתה ב-1904 בידי דייגים ובעלי מלאכה מקומיים.', map:'Zoodochos Pigi Korfos Greece'},
+      {name:'מפרץ סלונדה וסיפור הצוללת', en:'Selonda Bay', dist:'כ-40 דק׳', desc:'מפרץ דמוי-פיורד עם חוות דגים, ששימש מקום מסתור לצוללת היוונית פאפאניקוליס במלחמת העולם השנייה — מפקדה, מילטיאדיס יאטרידיס, הגיע מסופיקו הסמוכה.', map:'Selonda Greece'},
+    ]
+  },
+  {
+    cat:'daytrip', title:'טיולי יום מהבית', icon:'daytrip',
+    items:[
+      {name:'אפידאברוס העתיקה — התיאטרון', en:'Ancient Theatre of Epidaurus', dist:'כ-35–40 ק״מ · 40–45 דק׳', desc:'אחד התיאטראות העתיקים המרשימים והשמורים ביותר ביוון, מפורסם באקוסטיקה המושלמת שלו, חלק ממתחם ריפוי עתיק (היכל האסקלפיוס).', map:'Ancient Theatre of Epidaurus'},
+      {name:'אפידאברוס העתיקה (העיירה החופית)', en:'Palaia Epidavros', dist:'כ-20–25 ק״מ · 25–30 דק׳', desc:'עיירת חוף נעימה עם תיאטרון עתיק קטן משלה ומרינה — יעד קרוב יותר מקורפוס לטיול חצי-יום.', map:'Palaia Epidavros Greece'},
+      {name:'קורינתוס העתיקה ואקרוקורינתוס', en:'Ancient Corinth & Acrocorinth', dist:'כ-35 ק״מ · 40 דק׳', desc:'אתר ארכיאולוגי מרכזי (מקדש אפולו, אגורה) ולידו המבצר Acrocorinth שעל הגבעה — נוף מרהיב על כל האזור.', map:'Ancient Corinth Greece'},
+      {name:'תעלת קורינתוס', en:'Corinth Canal', dist:'כ-32 ק״מ · 38 דק׳', desc:'התעלה המרשימה שחוצה את האיסתמוס בין הים האגאי לים היוני — נקודת עצירה קצרה וקסומה בדרך, אפשר גם לצפות בקפיצות באנג׳י.', map:'Corinth Canal Greece'},
+      {name:'נאפליו', en:'Nafplio', dist:'כ-50–55 ק״מ · כ-50 דק׳', desc:'העיר העתיקה הרומנטית של הפלופונסוס: מצודת פאלאמידי, מבצר האי בורצי והרחובות הוונציאניים — יום שלם עם קפה וארוחת ערב.', map:'Nafplio Greece'},
+      {name:'לוטרקי — עיר הספא', en:'Loutraki', dist:'כ-40–45 ק״מ · 45 דק׳', desc:'עיירת נופש עם טיילת ים, מעיינות מרפא וקזינו — אופציה לערב אחר או יום רגוע יותר.', map:'Loutraki Greece'},
+    ]
+  },
+];
 
-            // Update Header Title & Counter
-            const titleMap = {
-                'all': 'כל המקומות והמדריכים לקורפוס',
-                'beaches': 'החופים השווים באזור קורפוס',
-                'supermarkets': 'סופרמרקטים וקניות',
-                'towns': 'עיירות, כפרים ואטרקציות',
-                'hikes': 'מסלולי הליכה וטבע',
-                'tips': 'טיפים חיוניים לתחזוקת הבית'
-            };
-            document.getElementById('section-title').innerHTML = `<i class="fa-solid fa-layer-group text-teal-600"></i> <span>${titleMap[currentTab] || 'תוצאות'}</span>`;
-            document.getElementById('items-count').innerText = `${filtered.length} פריטים`;
+const INFO_PANELS = [
+  {
+    title:'מרחקים עיקריים מקורפוס', icon:'info',
+    kv:[
+      ['סופיקו (הכפר הקרוב)','כ-10 ק״מ · 12–15 דק׳'],
+      ['קורינתוס (העיר)','כ-30 ק״מ · 35 דק׳'],
+      ['תעלת קורינתוס','כ-32 ק״מ · 38 דק׳'],
+      ['אפידאברוס העתיקה (עיירת חוף)','כ-20–25 ק״מ · 25–30 דק׳'],
+      ['תיאטרון אפידאברוס','כ-35–40 ק״מ · 40–45 דק׳'],
+      ['נאפליו','כ-50–55 ק״מ · 50 דק׳'],
+      ['לוטרקי','כ-40–45 ק״מ · 45 דק׳'],
+      ['אתונה','כ-110 ק״מ · 1:30 שעה'],
+    ]
+  },
+  {
+    title:'הגעה מאתונה', icon:'daytrip',
+    kv:[
+      ['מסלול','כביש אתונה–קורינתוס (בתשלום), ואז דרך החוף דרך סופיקו לכיוון אפידאברוס'],
+      ['תחבורה ציבורית','אין תחבורה ישירה לקורפוס — הכי נוח לשכור רכב; אפשר גם מונית מקורינתוס'],
+      ['חניה בכפר','ברחוב בלבד לאורך החוף, ללא חניון מסודר'],
+    ]
+  },
+  {
+    title:'מספרי חירום ומידע שימושי', icon:'info',
+    kv:[
+      ['חירום כללי (כל האיחוד האירופי)','112'],
+      ['אמבולנס / EKAB','166'],
+      ['משטרה','100'],
+      ['כיבוי אש','199'],
+      ['עונת רחצה נוחה','מאי עד אוקטובר, קיץ חם ויבש, חורף מתון וגשום יותר'],
+      ['כיסוי סלולרי/Wi-Fi','טוב במרכז הכפר, עלול להיחלש במפרצים המרוחקים יותר'],
+    ]
+  },
+];
 
-            if (filtered.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full text-center py-12 bg-white rounded-2xl border border-slate-200">
-                        <i class="fa-solid fa-magnifying-glass text-4xl text-slate-300 mb-3"></i>
-                        <h4 class="font-bold text-slate-700">לא נמצאו תוצאות</h4>
-                        <p class="text-xs text-slate-400 mt-1">נסה לחפש מילה אחרת או לעבור בלשוניות</p>
-                    </div>
-                `;
-                return;
-            }
+// ---------- Render ----------
+const filterbar = document.getElementById('filterbar');
+const sectionsEl = document.getElementById('sections');
+const emptyState = document.getElementById('emptyState');
 
-            filtered.forEach(item => {
-                const isFav = favorites.includes(item.id);
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-sm card-hover flex flex-col justify-between';
-                
-                card.innerHTML = `
-                    <div>
-                        <!-- Card Image Banner -->
-                        <div class="relative h-44 overflow-hidden bg-slate-100">
-                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80'">
-                            <span class="absolute top-3 right-3 text-[11px] font-bold px-2.5 py-1 rounded-full shadow-sm border ${item.badgeColor}">
-                                ${item.badge}
-                            </span>
-                            <button onclick="toggleFav('${item.id}')" class="absolute top-3 left-3 w-8 h-8 rounded-full bg-white/90 text-slate-600 hover:text-amber-500 flex items-center justify-center shadow-md transition-all">
-                                <i class="fa-${isFav ? 'solid text-amber-500' : 'regular'} fa-star text-sm"></i>
-                            </button>
-                            <div class="absolute bottom-2 right-3 bg-slate-900/80 backdrop-blur-md text-white text-[11px] px-2.5 py-0.5 rounded-md font-medium">
-                                <i class="fa-solid fa-car ml-1 text-teal-400"></i>${item.driveTime}
-                            </div>
-                        </div>
+function mapUrl(q){
+  return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
+}
 
-                        <!-- Card Body -->
-                        <div class="p-5">
-                            <h4 class="font-extrabold text-slate-900 text-base leading-snug">${item.title}</h4>
-                            <p class="text-xs font-semibold text-teal-700 mt-0.5 mb-2">${item.subtitle}</p>
-                            <p class="text-xs text-slate-600 leading-relaxed mb-3">${item.desc}</p>
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-[12px] text-slate-700 leading-normal">
-                                <strong class="text-slate-900">💡 מידע שימושי: </strong>${item.details}
-                            </div>
-                        </div>
-                    </div>
+// filter chips
+let state = {cat:'all', q:''};
 
-                    <!-- Card Footer Actions -->
-                    <div class="px-5 pb-5 pt-2 border-t border-slate-100 flex items-center justify-between gap-2 mt-auto">
-                        <span class="text-[11px] font-medium text-slate-400 truncate max-w-[140px]">
-                            <i class="fa-solid fa-location-dot ml-1 text-slate-400"></i>${item.location}
-                        </span>
-                        <a href="${item.mapUrl}" target="_blank" rel="noopener noreferrer" 
-                           class="bg-slate-900 hover:bg-teal-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all shadow-sm">
-                            <i class="fa-solid fa-diamond-turn-right text-teal-400"></i>
-                            <span>ניווט במפה</span>
-                        </a>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
+function buildChips(){
+  const allChip = document.createElement('button');
+  allChip.className = 'chip active';
+  allChip.dataset.cat = 'all';
+  allChip.innerHTML = '<span>הכל</span><span class="cnt">' + countAll() + '</span>';
+  filterbar.appendChild(allChip);
 
-        function renderChecklists() {
-            const arrContainer = document.getElementById('arrival-checklist');
-            const depContainer = document.getElementById('departure-checklist');
+  CATS.forEach(c=>{
+    const btn = document.createElement('button');
+    btn.className = 'chip';
+    btn.dataset.cat = c.id;
+    btn.style.setProperty('--cc', 'var(' + c.cc + ')');
+    btn.innerHTML = ICONS[c.id] + '<span>' + c.label + '</span><span class="cnt">' + countCat(c.id) + '</span>';
+    filterbar.appendChild(btn);
+  });
 
-            arrContainer.innerHTML = arrivalTasks.map(task => `
-                <label class="flex items-start gap-3 p-3 rounded-xl border ${checklistState[task.id] ? 'bg-teal-50/60 border-teal-200 text-teal-900 line-through' : 'bg-slate-50 border-slate-200 text-slate-800'} hover:border-teal-300 transition-all cursor-pointer">
-                    <input type="checkbox" onchange="toggleChecklist('${task.id}')" ${checklistState[task.id] ? 'checked' : ''} 
-                           class="mt-0.5 rounded text-teal-600 focus:ring-teal-500 w-4 h-4">
-                    <span class="text-xs font-medium leading-relaxed">${task.text}</span>
-                </label>
-            `).join('');
+  const searchWrap = document.createElement('label');
+  searchWrap.className = 'search';
+  searchWrap.innerHTML = ICONS.search + '<input type="text" placeholder="חיפוש לפי שם או תיאור…" id="searchInput" />';
+  filterbar.appendChild(searchWrap);
 
-            depContainer.innerHTML = departureTasks.map(task => `
-                <label class="flex items-start gap-3 p-3 rounded-xl border ${checklistState[task.id] ? 'bg-amber-50/60 border-amber-200 text-amber-900 line-through' : 'bg-slate-50 border-slate-200 text-slate-800'} hover:border-amber-300 transition-all cursor-pointer">
-                    <input type="checkbox" onchange="toggleChecklist('${task.id}')" ${checklistState[task.id] ? 'checked' : ''} 
-                           class="mt-0.5 rounded text-amber-600 focus:ring-amber-500 w-4 h-4">
-                    <span class="text-xs font-medium leading-relaxed">${task.text}</span>
-                </label>
-            `).join('');
-        }
+  filterbar.querySelectorAll('.chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      filterbar.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      state.cat = chip.dataset.cat;
+      applyFilter();
+    });
+  });
 
-        function toggleChecklist(id) {
-            checklistState[id] = !checklistState[id];
-            localStorage.setItem('korfos_checklist', JSON.stringify(checklistState));
-            renderChecklists();
-            showToast(checklistState[id] ? 'המשימה סומנה כבוצעה ✔️' : 'המשימה עודכנה');
-        }
+  document.getElementById('searchInput').addEventListener('input', (e)=>{
+    state.q = e.target.value.trim().toLowerCase();
+    applyFilter();
+  });
+}
 
-        function resetChecklist() {
-            checklistState = {};
-            localStorage.removeItem('korfos_checklist');
-            renderChecklists();
-            showToast('הצ\'קליסט אופס בהצלחה');
-        }
+function countAll(){
+  return SECTIONS.reduce((n,s)=>n+s.items.length,0);
+}
+function countCat(id){
+  const s = SECTIONS.find(s=>s.cat===id);
+  return s ? s.items.length : 0;
+}
 
-        function toggleFav(id) {
-            if (favorites.includes(id)) {
-                favorites = favorites.filter(favId => favId !== id);
-                showToast('הוסר מהמועדפים');
-            } else {
-                favorites.push(id);
-                showToast('נוסף למועדפים ⭐');
-            }
-            localStorage.setItem('korfos_favs', JSON.stringify(favorites));
-            updateFavBadges();
-            if (currentTab === 'favorites') {
-                filterFavorites();
-            } else {
-                renderCards();
-            }
-        }
+function buildSections(){
+  SECTIONS.forEach(sec=>{
+    const catMeta = CATS.find(c=>c.id===sec.cat);
+    const section = document.createElement('div');
+    section.className = 'section';
+    section.dataset.cat = sec.cat;
 
-        function updateFavBadges() {
-            document.getElementById('fav-count-desktop').innerText = favorites.length;
-            document.getElementById('fav-count-mobile').innerText = favorites.length;
-        }
+    const head = document.createElement('div');
+    head.className = 'section-head';
+    head.innerHTML =
+      '<div class="section-title-row">' +
+        '<span class="section-icon" style="--sc:var(' + catMeta.cc + ');--sc-tint:var(' + catMeta.cc + '-tint)">' + ICONS[sec.icon] + '</span>' +
+        '<h2>' + sec.title + '</h2>' +
+      '</div>' +
+      '<span class="count">' + sec.items.length + ' מקומות</span>';
+    section.appendChild(head);
 
-        function filterFavorites() {
-            currentTab = 'favorites';
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            
-            const grid = document.getElementById('cards-grid');
-            const checklist = document.getElementById('checklist-container');
-            const welcomeBanner = document.getElementById('quick-welcome-banner');
+    const grid = document.createElement('div');
+    grid.className = 'grid';
 
-            checklist.classList.add('hidden');
-            welcomeBanner.classList.remove('hidden');
-            grid.classList.remove('hidden');
+    sec.items.forEach(item=>{
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.cat = sec.cat;
+      card.dataset.text = (item.name + ' ' + item.en + ' ' + item.desc).toLowerCase();
+      card.style.setProperty('--cc', 'var(' + catMeta.cc + ')');
+      card.style.setProperty('--cc-tint', 'var(' + catMeta.cc + '-tint)');
+      card.innerHTML =
+        '<div class="card-top">' +
+          '<span class="card-icon">' + ICONS[sec.icon] + '</span>' +
+          '<div><h3>' + item.name + '</h3><div class="en">' + item.en + '</div></div>' +
+        '</div>' +
+        '<p>' + item.desc + '</p>' +
+        '<div class="card-foot">' +
+          '<span class="dist">' + item.dist + '</span>' +
+          '<a class="maplink" href="' + mapUrl(item.map) + '" target="_blank" rel="noopener">' + ICONS.pin + '<span>מפות</span></a>' +
+        '</div>';
+      grid.appendChild(card);
+    });
 
-            document.getElementById('section-title').innerHTML = `<i class="fa-solid fa-star text-amber-500"></i> <span>המקומות המועדפים שלך</span>`;
+    section.appendChild(grid);
+    sectionsEl.appendChild(section);
+  });
 
-            const favItems = dataItems.filter(item => favorites.includes(item.id));
-            document.getElementById('items-count').innerText = `${favItems.length} פריטים`;
+  // info panels section
+  const infoSection = document.createElement('div');
+  infoSection.className = 'section';
+  infoSection.dataset.cat = 'info';
+  const infoHead = document.createElement('div');
+  infoHead.className = 'section-head';
+  infoHead.innerHTML =
+    '<div class="section-title-row">' +
+      '<span class="section-icon" style="--sc:var(--c-info);--sc-tint:var(--c-info-tint)">' + ICONS.info + '</span>' +
+      '<h2>מידע שימושי</h2>' +
+    '</div><span class="count">' + INFO_PANELS.length + ' לוחות מידע</span>';
+  infoSection.appendChild(infoHead);
 
-            grid.innerHTML = '';
-            if (favItems.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full text-center py-12 bg-white rounded-2xl border border-slate-200">
-                        <i class="fa-solid fa-star text-4xl text-amber-200 mb-3"></i>
-                        <h4 class="font-bold text-slate-700">אין מועדפים עדיין</h4>
-                        <p class="text-xs text-slate-400 mt-1">לחצו על הכוכב בכרטיסים כדי לשמור אותם כאן לגישה מהירה</p>
-                    </div>
-                `;
-                return;
-            }
+  const infoGrid = document.createElement('div');
+  infoGrid.className = 'grid';
+  infoGrid.style.gridTemplateColumns = 'repeat(auto-fill,minmax(300px,1fr))';
 
-            // Render fav items (same card template)
-            dataItems.forEach(item => {
-                if(favorites.includes(item.id)) {
-                    const card = document.createElement('div');
-                    card.className = 'bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-sm card-hover flex flex-col justify-between';
-                    card.innerHTML = `
-                        <div>
-                            <div class="relative h-44 overflow-hidden bg-slate-100">
-                                <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
-                                <button onclick="toggleFav('${item.id}')" class="absolute top-3 left-3 w-8 h-8 rounded-full bg-white text-amber-500 flex items-center justify-center shadow-md">
-                                    <i class="fa-solid fa-star text-sm"></i>
-                                </button>
-                            </div>
-                            <div class="p-5">
-                                <h4 class="font-extrabold text-slate-900 text-base">${item.title}</h4>
-                                <p class="text-xs text-slate-600 mt-1">${item.desc}</p>
-                            </div>
-                        </div>
-                        <div class="px-5 pb-5 pt-2 border-t border-slate-100 flex items-center justify-between">
-                            <span class="text-xs text-slate-500">${item.location}</span>
-                            <a href="${item.mapUrl}" target="_blank" class="bg-slate-900 text-white text-xs font-bold px-3.5 py-2 rounded-xl">ניווט במפה</a>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                }
-            });
-        }
+  INFO_PANELS.forEach(p=>{
+    const panel = document.createElement('div');
+    panel.className = 'panel card';
+    panel.dataset.cat = 'info';
+    panel.dataset.text = p.title.toLowerCase() + ' ' + p.kv.map(x=>x.join(' ')).join(' ').toLowerCase();
+    panel.innerHTML =
+      '<div class="card-top"><span class="card-icon" style="--cc:var(--c-info);--cc-tint:var(--c-info-tint)">' + ICONS[p.icon] + '</span><h3>' + p.title + '</h3></div>' +
+      '<div class="kv">' + p.kv.map(([k,v])=>'<div class="item"><b>' + k + '</b><span>' + v + '</span></div>').join('') + '</div>';
+    infoGrid.appendChild(panel);
+  });
+  infoSection.appendChild(infoGrid);
+  sectionsEl.appendChild(infoSection);
+}
 
-        function handleSearch() {
-            searchQuery = document.getElementById('searchInput').value.trim();
-            if (currentTab === 'checklist') {
-                switchTab('all');
-            } else {
-                renderCards();
-            }
-        }
+function applyFilter(){
+  let anyVisible = false;
+  document.querySelectorAll('.section').forEach(section=>{
+    const matchesCat = state.cat === 'all' || section.dataset.cat === state.cat;
+    let sectionHasVisible = false;
+    section.querySelectorAll('.card').forEach(card=>{
+      const matchesText = !state.q || card.dataset.text.includes(state.q);
+      const visible = matchesCat && matchesText;
+      card.hidden = !visible;
+      if(visible){ sectionHasVisible = true; anyVisible = true; }
+    });
+    section.style.display = sectionHasVisible ? '' : 'none';
+  });
+  emptyState.style.display = anyVisible ? 'none' : 'block';
+}
 
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-msg').innerText = msg;
-            toast.classList.remove('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'pointer-events-none');
-            }, 2500);
-        }
-    </script>
-</body>
-</html>
+buildChips();
+buildSections();
+applyFilter();
+</script>
