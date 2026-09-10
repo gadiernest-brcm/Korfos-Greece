@@ -4,22 +4,34 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;600;700&family=Heebo:wght@300;400;500;600;700&display=swap">
 <style>
   :root{
-    --bg:#eef3f0;
+    --bg:#f5f1e7;
     --surface:#ffffff;
-    --surface-2:#e2ebe6;
+    --surface-2:#ece4d3;
     --ink:#132726;
     --ink-soft:#3a534f;
     --ink-faint:#71887f;
-    --border:#d2ddd7;
-    --border-soft:#e2eae5;
-    --accent:#136866;
-    --accent-strong:#0b4a48;
-    --accent-tint:#dcece9;
-    --gold:#a97a1f;
-    --gold-tint:#f3e6cb;
+    --border:#ddd3bd;
+    --border-soft:#ece4d3;
+    --accent:#0b4541;
+    --accent-strong:#062e2b;
+    --accent-tint:#dde8e6;
+    --gold:#9c6f28;
+    --gold-tint:#f1e3c6;
     --shadow:0 1px 2px rgba(15,40,38,.06), 0 8px 24px -12px rgba(15,40,38,.18);
 
-    --c-beach:#136866;      --c-beach-tint:#dcece9;
+    /* masthead — a fixed deep-harbor band, same in both reading themes */
+    --hero-bg:#0a332f;
+    --hero-bg-2:#0d423c;
+    --hero-ink:#f7f3e6;
+    --hero-ink-soft:rgba(247,243,230,.82);
+    --hero-ink-faint:rgba(247,243,230,.62);
+    --hero-eyebrow-bg:rgba(247,243,230,.12);
+    --hero-eyebrow-ink:#e4c281;
+    --hero-accent:#e4c281;
+    --hero-card-bg:rgba(247,243,230,.07);
+    --hero-card-border:rgba(247,243,230,.17);
+
+    --c-beach:#0b4541;      --c-beach-tint:#dde8e6;
     --c-food:#8a4a20;       --c-food-tint:#f1e2d2;
     --c-shop:#946a17;       --c-shop-tint:#f2e6c8;
     --c-hike:#3f6b34;       --c-hike-tint:#e2ebda;
@@ -113,47 +125,45 @@
   /* ---------- Hero ---------- */
   .hero{
     position:relative;
-    padding:44px 20px 28px;
-    background:
-      radial-gradient(120% 160% at 100% 0%, var(--accent-tint), transparent 60%),
-      var(--surface);
-    border-bottom:1px solid var(--border-soft);
+    padding:48px 20px 30px;
+    background:radial-gradient(140% 160% at 100% 0%, var(--hero-bg-2), var(--hero-bg) 62%);
     overflow:hidden;
   }
   .hero-wave{
-    position:absolute; inset:auto 0 0 0; height:64px; opacity:.5; pointer-events:none;
+    position:absolute; inset:auto 0 0 0; height:52px; pointer-events:none;
   }
   .hero-inner{max-width:1080px;margin:0 auto;position:relative;}
   .eyebrow{
     display:inline-flex;align-items:center;gap:8px;
     font-family:'Heebo';font-size:14px;font-weight:700;
-    color:var(--accent-strong);
-    background:var(--accent-tint);
+    color:var(--hero-eyebrow-ink);
+    background:var(--hero-eyebrow-bg);
+    border:1px solid var(--hero-card-border);
     padding:7px 16px;border-radius:999px;
     margin-bottom:18px;
   }
-  .hero h1{font-size:clamp(36px,5.5vw,58px);color:var(--ink);line-height:1.08;font-weight:700;}
+  .hero h1{font-size:clamp(36px,5.5vw,58px);color:var(--hero-ink);line-height:1.08;font-weight:700;}
   .hero .sub{
-    font-size:18.5px;color:var(--ink-soft);max-width:62ch;margin-top:16px;line-height:1.75;
+    font-size:18.5px;color:var(--hero-ink-soft);max-width:62ch;margin-top:16px;line-height:1.75;
   }
   .hero .meta{
-    margin-top:8px;font-size:14.5px;color:var(--ink-faint);
+    margin-top:8px;font-size:14.5px;color:var(--hero-ink-faint);
   }
 
   /* quick facts strip */
   .facts{
     max-width:1080px;margin:26px auto 0;
     display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
-    background:var(--border-soft);
-    border:1px solid var(--border-soft);
+    background:var(--hero-card-border);
+    border:1px solid var(--hero-card-border);
     border-radius:var(--radius-m);
     overflow:hidden;
   }
   .fact{
-    background:var(--surface);padding:17px 18px;
+    background:var(--hero-card-bg);padding:17px 18px;
   }
-  .fact .n{font-family:'Frank Ruhl Libre';font-size:27px;font-weight:700;color:var(--accent-strong);}
-  .fact .l{font-size:13px;color:var(--ink-faint);margin-top:5px;font-weight:500;}
+  .fact .n{font-family:'Frank Ruhl Libre';font-size:27px;font-weight:700;color:var(--hero-accent);}
+  .fact .l{font-size:13px;color:var(--hero-ink-faint);margin-top:5px;font-weight:500;}
 
   /* ---------- Filter bar ---------- */
   .filterbar{
@@ -365,7 +375,7 @@
 
 <div class="hero">
   <svg class="hero-wave" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0,30 C150,60 350,0 600,30 C850,60 1050,0 1200,30 L1200,60 L0,60 Z" fill="var(--accent-tint)"></path>
+    <path d="M0,30 C150,60 350,0 600,30 C850,60 1050,0 1200,30 L1200,60 L0,60 Z" fill="var(--bg)"></path>
   </svg>
   <div class="hero-inner">
     <span class="eyebrow">⚓ קורפוס, קורינתיה · מפרץ הסרוניקוס</span>
